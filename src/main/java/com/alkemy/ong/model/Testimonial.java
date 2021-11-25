@@ -1,7 +1,5 @@
 package com.alkemy.ong.model;
 
-import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -26,15 +26,15 @@ public class Testimonial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Name field has to be present")
     @Column(nullable = false)
     private String name;
 
-    @Nullable
+    @Null
     @Column(nullable = true)
     private String image;
 
-    @Nullable
+    @Null
     @Column(nullable = true)
     private String content;
 
