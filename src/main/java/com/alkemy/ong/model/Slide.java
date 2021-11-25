@@ -7,7 +7,7 @@ package com.alkemy.ong.model;
 
 
 
-import com.sun.istack.NotNull;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +31,7 @@ public class Slide {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull(message = "El url no puede estar vacio")
+    @NotNull
     private String imageUrl;
     
     @NotNull(message="El text no puede estar vacio")
