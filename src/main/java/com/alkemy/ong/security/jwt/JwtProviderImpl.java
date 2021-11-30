@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//import lombok.extern.log4j.Log4j2;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +22,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-//@Log4j2
 @Component
 @PropertySource("classpath:application.properties")
 public class JwtProviderImpl implements IJwtProvider{
@@ -40,9 +37,6 @@ public class JwtProviderImpl implements IJwtProvider{
 
 		String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
-
-//        log.info("JWT_SECRET " + JWT_SECRET);
-//        log.info("JWT_EXPIRATION_TIME " + JWT_EXPIRATION_TIME);
 
 		return Jwts.builder().setSubject(auth.getUsername()).claim("roles", authorities).claim("userId", auth.getId())
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_TIME))
