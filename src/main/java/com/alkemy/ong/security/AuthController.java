@@ -49,9 +49,5 @@ public class AuthController {
 		
 	}
 	
-	@GetMapping("/prueba")
-	public String prueba() {
-		return "Probando endpoint";
-	}
-
+	
 }

@@ -13,15 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 
 
 
-/**
- *
- * @author mateo
- */
+
 @Data
 @Entity
 @Table(name="slides")
