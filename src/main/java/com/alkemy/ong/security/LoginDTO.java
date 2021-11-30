@@ -11,8 +11,23 @@ public class LoginDTO {
     @NotBlank
     @NotNull(message= "You must enter your password to be able to login")
     private String password;
+    
+    public LoginDTO() {
+    	
+    }
+    
+    
 
-    public String getEmail() {
+    public LoginDTO(@NotBlank @NotNull(message = "You must enter your email to be able to login") String email,
+			@NotBlank @NotNull(message = "You must enter your password to be able to login") String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+
+
+	public String getEmail() {
         return email;
     }
 

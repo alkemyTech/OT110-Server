@@ -12,12 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -34,15 +37,21 @@ public class AuthController {
 			Authentication authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			String jwt = JwtProviderImpl.generateToken(authentication);
-			UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-			JwtDTO jwtDto = new JwtDTO(jwt, userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities());
+			//String jwt = JwtProviderImpl.generateToken(authentication);
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			JwtDTO jwtDto = new JwtDTO("Este es tu token", userDetails.getUsername(), userDetails.getAuthorities());
 
 			return new ResponseEntity<JwtDTO>(jwtDto, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>("{ok = false }"+ "error: " + e.getLocalizedMessage(), HttpStatus.CONFLICT);
 		}
 		
+	}
+	
+	@GetMapping("/prueba")
+	public String prueba() {
+		return "Probando endpoint";
 	}
 
 }
