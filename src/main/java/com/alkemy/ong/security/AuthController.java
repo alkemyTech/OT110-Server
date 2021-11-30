@@ -37,9 +37,9 @@ public class AuthController {
 			Authentication authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			//String jwt = JwtProviderImpl.generateToken(authentication);
+			String jwt = JwtProviderImpl.generateToken(authentication);
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			JwtDTO jwtDto = new JwtDTO("Este es tu token", userDetails.getUsername(), userDetails.getAuthorities());
+			JwtDTO jwtDto = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 
 			return new ResponseEntity<JwtDTO>(jwtDto, HttpStatus.OK);
 			
