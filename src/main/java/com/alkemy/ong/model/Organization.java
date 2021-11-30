@@ -32,6 +32,9 @@ public class Organization {
     @NotNull(message = "Name cannot be null")
     private String name;
 
+    @NotNull(message = "Image cannot be null")
+    private String image;
+
     @Nullable
     private String address;
 
