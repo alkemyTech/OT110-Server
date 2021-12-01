@@ -21,7 +21,7 @@ public class UserController {
     private final IUserService  iUserService;
 
     @GetMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
     public ResponseEntity<?> getUsers(){
         try{
             List<UserDto> list = iUserService.getUsers();
