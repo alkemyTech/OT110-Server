@@ -8,15 +8,10 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 
 @Data
 @EqualsAndHashCode
@@ -24,10 +19,10 @@ import java.util.Collections;
 @Entity
 @SQLDelete(sql = "UPDATE user SET enabled = false WHERE userId = ?")
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User implements UserDetails{
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Long userId;
 
     @NotNull(message = "First name cannot be null")
     private String firstName;
@@ -60,39 +55,7 @@ public class User implements UserDetails{
     @JoinColumn(name="roleId")
     private Role role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
-        return Collections.singletonList(authority);
-    }
+    @Transient
+    private String token;
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 }
