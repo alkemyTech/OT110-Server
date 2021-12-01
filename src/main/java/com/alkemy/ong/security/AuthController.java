@@ -49,5 +49,4 @@ public class AuthController {
 		
 	}
 	
-	//AGREGO COMENTARIO DE PRUEBA
 }

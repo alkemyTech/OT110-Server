@@ -1,6 +1,7 @@
 package com.alkemy.ong.security;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,10 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
-
+	@Autowired
+	AuthenticationManager authenticationManager;
    
-   /* @Autowired
-    private UserDetailsService customUserDetailsService;*/
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,7 +45,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       // auth.parentAuthenticationManager(authenticationManager);
-               // .userDetailsService(customUserDetailsService);
+        auth.parentAuthenticationManager(authenticationManager);
+               .userDetailsService(userDetailsServiceImpl);
     }
 }
