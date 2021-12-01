@@ -48,4 +48,5 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
         auth.parentAuthenticationManager(authenticationManager);
                .userDetailsService(userDetailsServiceImpl);
     }
+
 }
