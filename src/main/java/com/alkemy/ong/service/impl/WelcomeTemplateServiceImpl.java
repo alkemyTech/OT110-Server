@@ -1,6 +1,8 @@
-package com.alkemy.ong.service;
+package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.EmailException;
+import com.alkemy.ong.service.IWelcomeTemplateService;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -16,13 +18,14 @@ import java.util.Locale;
 import java.util.Map;
 
 @Service
-public class WelcomeTemplateService {
+public class WelcomeTemplateServiceImpl implements IWelcomeTemplateService{
 
     @Autowired
     private Configuration config;
 
     private MessageSource messageSource;
 
+    @Override
     public String setTemplate(String name, String surname) throws EmailException {
         Map<String, Object> model = new HashMap<>();
 
@@ -43,7 +46,8 @@ public class WelcomeTemplateService {
 
         }
     }
-
+    
+    @Override
     public String getSubject(){
 
         return messageSource.getMessage("welcomeMessageTemplate.emailSubject",null, Locale.US);

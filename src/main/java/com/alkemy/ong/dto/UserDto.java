@@ -1,6 +1,5 @@
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.model.Role;
 import lombok.*;
 
 @Getter
@@ -9,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-
-    private Integer userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;
