@@ -28,4 +28,5 @@ public class CategoryDto {
     private String image;
     private LocalDateTime dateCreacion;
     private LocalDateTime dateUpdate;
+
 }

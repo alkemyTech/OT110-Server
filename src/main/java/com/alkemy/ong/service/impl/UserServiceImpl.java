@@ -3,6 +3,7 @@ package com.alkemy.ong.service.impl;
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.exception.EmailExistException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.User;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
@@ -64,6 +65,9 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         List<UserDto> userDto = userRepository.findAll().stream()
                 .map(this::mapUserToUserDto)
                 .collect(Collectors.toList());
+        if(userDto.isEmpty()){
+            throw new NotFoundException("User list is empty");
+        }
         return userDto;
     }
 

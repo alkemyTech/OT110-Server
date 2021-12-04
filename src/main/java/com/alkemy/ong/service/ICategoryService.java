@@ -5,11 +5,15 @@
  */
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.dto.CategoryByNameDto;
 import com.alkemy.ong.dto.CategoryDto;
 
+import java.util.List;
 
 
 public interface ICategoryService {
 
     public CategoryDto findById(Long id);
+
+    public List<CategoryByNameDto> findByName();
 }

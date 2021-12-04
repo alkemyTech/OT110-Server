@@ -1,7 +1,9 @@
 
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.dto.CategoryByNameDto;
 import com.alkemy.ong.dto.CategoryDto;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.service.ICategoryService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
@@ -35,6 +39,12 @@ public class CategoryController {
 			return new ResponseEntity<>(e.toString(), HttpStatus.CONFLICT);
 		}
     }
-    
-    
+
+    @GetMapping()
+    @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
+    public ResponseEntity<List<CategoryByNameDto>> findCategoriesByName(){
+            List<CategoryByNameDto> listCategories = categoryService.findByName();
+            return new ResponseEntity<List<CategoryByNameDto>>(listCategories, HttpStatus.OK);
+    }
+
 }

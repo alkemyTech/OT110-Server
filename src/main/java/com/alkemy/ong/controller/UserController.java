@@ -22,14 +22,9 @@ public class UserController {
 
     @GetMapping()
     @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
-    public ResponseEntity<?> getUsers(){
-        try{
+    public ResponseEntity<List<UserDto>> getUsers(){
             List<UserDto> list = iUserService.getUsers();
-            return new ResponseEntity<>((UserDto) list, HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
-        }
+            return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
     }
 }
 
