@@ -16,9 +16,6 @@ import com.alkemy.ong.security.dto.LoginDto;
 import com.alkemy.ong.security.service.IAuthenticationService;
 import com.alkemy.ong.service.IUserService;
 
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -36,7 +33,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<?> signIn(@Valid @RequestBody LoginDto user){
-    	log.info("[AuthenticationController] -> authenticationService.signInAndReturnJWT() ");
         return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
     }
 
