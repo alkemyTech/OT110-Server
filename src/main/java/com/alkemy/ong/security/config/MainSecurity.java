@@ -46,7 +46,6 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
         
         http.authorizeRequests()
         		.antMatchers("/login").permitAll()
-        		.antMatchers("/category/**").permitAll()
         		.anyRequest().authenticated();  
     }
 
