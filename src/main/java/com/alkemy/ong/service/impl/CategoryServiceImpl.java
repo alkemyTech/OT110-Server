@@ -8,7 +8,7 @@ package com.alkemy.ong.service.impl;
 import com.alkemy.ong.dto.CategoryDto;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
-import com.alkemy.ong.service.CategoryService;
+import com.alkemy.ong.service.ICategoryService;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements ICategoryService{
     
     public  final CategoryRepository categoryRepository;
     

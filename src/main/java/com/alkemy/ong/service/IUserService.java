@@ -9,7 +9,7 @@ import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.model.User;
 import com.alkemy.ong.exception.EmailExistException;
 
-public interface UserService {
+public interface IUserService {
 
     void makeAdmin(String username);
 

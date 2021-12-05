@@ -1,4 +1,4 @@
-package com.alkemy.ong.security;
+package com.alkemy.ong.security.controller;
 
 import javax.validation.Valid;
 
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.exception.EmailExistException;
-import com.alkemy.ong.service.AuthenticationService;
-import com.alkemy.ong.service.UserService;
+import com.alkemy.ong.security.dto.LoginDto;
+import com.alkemy.ong.security.service.IAuthenticationService;
+import com.alkemy.ong.service.IUserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -23,10 +24,10 @@ import lombok.extern.log4j.Log4j2;
 public class AuthenticationController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private IAuthenticationService authenticationService;
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<?> signUp(@Valid @RequestBody UserRequest user) throws EmailExistException{

@@ -11,9 +11,8 @@ import com.alkemy.ong.exception.EmailExistException;
 import com.alkemy.ong.model.User;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
-import com.alkemy.ong.security.AuthenticationController;
 import com.alkemy.ong.security.RoleEnum;
-import com.alkemy.ong.service.UserService;
+import com.alkemy.ong.service.IUserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements IUserService{
 
     @Autowired
     private UserRepository userRepository;

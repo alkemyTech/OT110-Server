@@ -16,7 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.alkemy.ong.security.UserDetailsImpl;
+import com.alkemy.ong.security.service.UserDetailsImpl;
 import com.alkemy.ong.util.SecurityUtils;
 
 import io.jsonwebtoken.Claims;
@@ -26,7 +26,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Log4j2
 @Component
 @PropertySource("classpath:application.properties")
-public class JwtProviderImpl implements JwtProvider {
+public class JwtProviderImpl implements IJwtProvider {
 
 //	@Value("${app.jwtSecret}")
 	private static String JWT_SECRET = "C9D0629998B86CE363D1885709757E9F29297B912F66BE3A019BDD74C15D3F03";

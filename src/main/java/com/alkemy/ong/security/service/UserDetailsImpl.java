@@ -1,4 +1,4 @@
-package com.alkemy.ong.security;
+package com.alkemy.ong.security.service;
 
 import java.util.Collection;
 import java.util.Set;

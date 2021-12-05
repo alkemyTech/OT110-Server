@@ -1,4 +1,4 @@
-package com.alkemy.ong.security;
+package com.alkemy.ong.security.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

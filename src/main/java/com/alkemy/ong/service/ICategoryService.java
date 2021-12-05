@@ -13,7 +13,7 @@ import com.alkemy.ong.dto.CategoryDto;
  * @author mateo
  */
 
-public interface CategoryService {
+public interface ICategoryService {
 
     public CategoryDto findById(Long id);
 }

@@ -1,4 +1,4 @@
-package com.alkemy.ong.security;
+package com.alkemy.ong.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

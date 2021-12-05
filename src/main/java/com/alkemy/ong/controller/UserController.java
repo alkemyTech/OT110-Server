@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.security.RoleEnum;
-import com.alkemy.ong.service.UserService;
+import com.alkemy.ong.service.IUserService;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	
 	@GetMapping("/users")
 	@PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")

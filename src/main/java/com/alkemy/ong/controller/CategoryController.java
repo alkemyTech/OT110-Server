@@ -6,7 +6,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.CategoryDto;
-import com.alkemy.ong.service.CategoryService;
+import com.alkemy.ong.service.ICategoryService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
      
     @Autowired
-    private CategoryService categoryService;
+    private ICategoryService iCategoryService;
     
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
     public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ) {
         try {
-		CategoryDto categoryDto = categoryService.findById(id);
+		CategoryDto categoryDto = iCategoryService.findById(id);
                 if (categoryDto == null) {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
