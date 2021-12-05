@@ -5,11 +5,16 @@
  */
 package com.alkemy.ong.service;
 
+import javax.validation.Valid;
+
 import com.alkemy.ong.dto.CategoryDto;
+import com.alkemy.ong.dto.CategoryRequestUpdate;
 
 
 
 public interface ICategoryService {
 
     public CategoryDto findById(Long id);
+
+	public CategoryDto updateCategory(@Valid CategoryRequestUpdate category, Long id);
 }
