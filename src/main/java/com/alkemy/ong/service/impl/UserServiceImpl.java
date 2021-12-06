@@ -14,14 +14,11 @@ import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
 import com.alkemy.ong.service.IUserService;
 
-import lombok.extern.log4j.Log4j2;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Log4j2
 @Service
 public class UserServiceImpl implements IUserService{
 
@@ -51,9 +48,9 @@ public class UserServiceImpl implements IUserService{
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRole(roleRepository.findByName(RoleEnum.USER.getName()));
         user.setDateCreation(LocalDateTime.now());
-        log.info("[UserServiceImpl] -> generateUser() " + user.toString());
         return user;
     }
+
 
     @Override
     public Optional<User> findByEmail(String email){

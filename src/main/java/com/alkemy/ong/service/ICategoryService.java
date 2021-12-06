@@ -8,12 +8,8 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.dto.CategoryDto;
 
 
-/**
- *
- * @author mateo
- */
 
 public interface ICategoryService {
 
-    public CategoryDto findById(Long id);
+    CategoryDto findById(Long id);
 }

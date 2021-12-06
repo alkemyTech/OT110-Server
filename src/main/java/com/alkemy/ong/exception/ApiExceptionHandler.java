@@ -21,7 +21,7 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	public ExceptionMessage retunrError(Exception e) {
+	public ExceptionMessage returnError(Exception e) {
 		return new ExceptionMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), LocalDateTime.now());
 
 	}
@@ -30,7 +30,7 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseBody
-	public ExceptionMessage retunrErrorBadRequest(NotFoundException e) {
+	public ExceptionMessage returnErrorBadRequest(NotFoundException e) {
 		return new ExceptionMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), LocalDateTime.now());
 	}
 	
@@ -38,7 +38,7 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseBody
-	public ExceptionMessage retunrErrorIllegalArgument(IllegalArgumentException e) {
+	public ExceptionMessage returnErrorIllegalArgument(IllegalArgumentException e) {
 		return new ExceptionMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), LocalDateTime.now());
 	}
 	
@@ -46,7 +46,7 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseBody
-	public ExceptionMessage retunrErrorMethodArgumentNotValid(MethodArgumentNotValidException e) {
+	public ExceptionMessage returnErrorMethodArgumentNotValid(MethodArgumentNotValidException e) {
 		Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();

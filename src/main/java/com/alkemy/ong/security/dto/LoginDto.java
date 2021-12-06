@@ -13,12 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginDto {
-	
+
     @NotBlank
     @NotNull(message= "You must enter your email to be able to login")
     private String email;
     @NotBlank
     @NotNull(message= "You must enter your password to be able to login")
     private String password;
-    
+
 }

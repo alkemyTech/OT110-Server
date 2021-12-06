@@ -1,6 +1,5 @@
 package com.alkemy.ong.security.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,9 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.ong.model.User;
+
 import com.alkemy.ong.security.dto.LoggedUserDto;
 import com.alkemy.ong.security.dto.LoginDto;
 import com.alkemy.ong.security.jwt.IJwtProvider;
+
 
 @Service
 public class AuthenticationServiceImpl implements IAuthenticationService {
