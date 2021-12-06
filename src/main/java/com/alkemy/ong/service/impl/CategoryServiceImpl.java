@@ -37,9 +37,9 @@ public class CategoryServiceImpl implements ICategoryService{
             Category category= rta.get();
             categoryDto.setId(category.getId());
             categoryDto.setImage(category.getImage());
-            categoryDto.setDescripcion(category.getDescription());
+            categoryDto.setDescription(category.getDescription());
             categoryDto.setName(category.getName());
-            categoryDto.setDateCreacion(category.getDateCreation().toString());
+            categoryDto.setDateCreation(category.getDateCreation().toString());
             categoryDto.setDateUpdate(category.getDateUpdate().toString());
         }
         return categoryDto;
@@ -63,9 +63,9 @@ public class CategoryServiceImpl implements ICategoryService{
 		CategoryDto categoryDto = new CategoryDto();
 		categoryDto.setId(categoryUpdated.getId());
 		categoryDto.setName(categoryUpdated.getName());
-		categoryDto.setDescripcion(categoryUpdated.getDescription());
+		categoryDto.setDescription(categoryUpdated.getDescription());
 		categoryDto.setImage(categoryUpdated.getImage());
-		categoryDto.setDateCreacion(categoryUpdated.getDateCreation().toString());
+		categoryDto.setDateCreation(categoryUpdated.getDateCreation().toString());
 		categoryDto.setDateUpdate(categoryUpdated.getDateUpdate().toString());
 		return categoryDto;
 	}

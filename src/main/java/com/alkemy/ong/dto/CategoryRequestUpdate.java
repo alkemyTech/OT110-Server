@@ -13,7 +13,7 @@ public class CategoryRequestUpdate {
 	@NotNull(message = "Name Category is necessary.")
 	private String name;
 	@Nullable
-	private String descripcion;
+	private String description;
 	@Nullable
 	private String image;
 }
