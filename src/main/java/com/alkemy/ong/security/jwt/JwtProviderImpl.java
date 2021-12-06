@@ -27,10 +27,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtProviderImpl implements IJwtProvider {
 
 	@Value("${app.jwtSecret}")
-	private static String JWT_SECRET;
+	private String JWT_SECRET;
 
 	@Value("${app.jwtExpirationInMs}")
-	private static Long JWT_EXPIRATION_TIME;
+	private Long JWT_EXPIRATION_TIME;
 
 	@Override
 	public String generateToken(UserDetailsImpl auth) {
