@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements ICategoryService{
 
 	private void mapDtoToEntity(Category categoryEntity, @Valid CategoryRequestUpdate category) {
 		categoryEntity.setName(category.getName());
-		categoryEntity.setDescription(category.getDescripcion());
+		categoryEntity.setDescription(category.getDescription());
 		categoryEntity.setImage(category.getImage());
 		categoryEntity.setDateUpdate(LocalDateTime.now());
 	}
