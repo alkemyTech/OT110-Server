@@ -3,6 +3,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.CategoryDto;
 import com.alkemy.ong.dto.CategoryRequestUpdate;
+import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.ICategoryService;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class CategoryController {
     private ICategoryService iCategoryService;
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
+    @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ) {
         try {
 		CategoryDto categoryDto = iCategoryService.findById(id);
@@ -40,7 +41,7 @@ public class CategoryController {
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
+    @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequestUpdate category, @PathVariable("id") Long id){
     	return new ResponseEntity<>(iCategoryService.updateCategory(category, id), HttpStatus.OK);
     }
