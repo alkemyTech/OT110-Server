@@ -7,26 +7,34 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.ong.model.User;
-import com.alkemy.ong.security.dto.LoginDTO;
-import com.alkemy.ong.security.jwt.JwtProviderImpl;
+
+import com.alkemy.ong.security.dto.LoggedUserDto;
+import com.alkemy.ong.security.dto.LoginDto;
+import com.alkemy.ong.security.jwt.IJwtProvider;
+
 
 @Service
-public class AuthenticationServiceImpl {
-	
-	@Autowired
+public class AuthenticationServiceImpl implements IAuthenticationService {
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtProviderImpl jwtProviderImpl;
+    private IJwtProvider jwtProvider;
 
-    public User signInAndReturnJWT(LoginDTO signInRequest){
+    @Override
+    public LoggedUserDto signInAndReturnJWT(LoginDto signInRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequest.getEmail(), signInRequest.getPassword())
         );
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String jwt = jwtProviderImpl.generateToken(userDetails);
+        String jwt = jwtProvider.generateToken(userDetails);
         User signInUser = userDetails.getUser();
         signInUser.setToken(jwt);
-        return signInUser;
+        LoggedUserDto loggedUser = new LoggedUserDto();
+        loggedUser.setEmail(signInUser.getEmail());
+        loggedUser.setToken(signInUser.getToken());
+        return loggedUser;
     }
+
 }

@@ -1,46 +1,39 @@
 package com.alkemy.ong.service.impl;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.exception.EmailExistException;
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
 import com.alkemy.ong.service.IUserService;
-import com.alkemy.ong.service.RoleService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+public class UserServiceImpl implements IUserService{
 
-public class UserServiceImpl implements IUserService, UserDetailsService {
-	
-	@Autowired
+    @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
+    private RoleRepository roleRepository;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    @Autowired
-    private RoleService roleService;
-
-
-    @Transactional
+    @Override
     public User createUser(UserRequest userRequest) throws EmailExistException {
-        if (userRepository.findByEmail(userRequest.getEmail()) != null) {
+        if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
             throw new EmailExistException(userRequest.getEmail());
         }
         return userRepository.save(generateUser(userRequest));
@@ -53,10 +46,22 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         user.setEmail(userRequest.getEmail());
         user.setPhoto(userRequest.getPhoto());
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        user.setRole(roleService.findByName(RoleEnum.USER.getRoleName()));
+        user.setRole(roleRepository.findByName(RoleEnum.USER.getName()));
+        user.setDateCreation(LocalDateTime.now());
         return user;
     }
 
+
+    @Override
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+	@Override
+	public void makeAdmin(String username) {
+		// TODO Auto-generated method stub
+		
+	}
 
     @Override
     public List<UserDto> getUsers() {
@@ -67,19 +72,17 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         return userDto;
     }
 
-    @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
     private UserDto mapUserToUserDto(User user){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserDto.class);
-    }
+    }    
+    
+//    @Override
+//    @Transactional
+//    public void makeAdmin(String username){
+//        userRepository.updateUserRole(username, roleRepository.findByName(RoleEnum.ADMIN.getName()));
+//    }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
-    }
+
+
 }
-

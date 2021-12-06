@@ -18,13 +18,13 @@ import java.util.Locale;
 import java.util.Map;
 
 @Service
-public class WelcomeTemplateServiceImpl implements IWelcomeTemplateService {
+public class WelcomeTemplateServiceImpl implements IWelcomeTemplateService{
 
     @Autowired
     private Configuration config;
 
     private MessageSource messageSource;
-    
+
     @Override
     public String setTemplate(String name, String surname) throws EmailException {
         Map<String, Object> model = new HashMap<>();

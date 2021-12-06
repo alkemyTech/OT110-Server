@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
 	
     @Autowired
-    private ICategoryService categoryService;
+    private ICategoryService iCategoryService;
     
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
     public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ) {
         try {
-		CategoryDto categoryDto = categoryService.findById(id);
+		CategoryDto categoryDto = iCategoryService.findById(id);
                 if (categoryDto == null) {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
@@ -42,7 +42,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
     public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequestUpdate category, @PathVariable("id") Long id){
-    	return new ResponseEntity<>(categoryService.updateCategory(category, id), HttpStatus.OK);
+    	return new ResponseEntity<>(iCategoryService.updateCategory(category, id), HttpStatus.OK);
     }
     
 }
