@@ -3,6 +3,7 @@ package com.alkemy.ong.security.jwt;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.alkemy.ong.security.service.UserDetailsImpl;
-import com.alkemy.ong.util.SecurityUtils;
+import com.alkemy.ong.security.util.SecurityUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,6 +32,9 @@ public class JwtProviderImpl implements IJwtProvider {
 
 	@Value("${app.jwtExpirationInMs}")
 	private Long JWT_EXPIRATION_TIME;
+
+	public final static String AUTH_TOKEN_TYPE = "Bearer ";
+	private static final String EMPTY = "";
 
 	@Override
 	public String generateToken(UserDetailsImpl auth) {
@@ -81,6 +85,26 @@ public class JwtProviderImpl implements IJwtProvider {
 			return null;
 		}
 		return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody();
+	}
+
+	public String extractUsername(String authorizationHeader) {
+		return extractClaim(getToken(authorizationHeader), Claims::getSubject);
+	}
+
+	private String getToken(String authorizationHeader) {
+		return authorizationHeader.replace(AUTH_TOKEN_TYPE, EMPTY);
+	}
+
+	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+		final Claims claims = extractAllClaims(token);
+		return claimsResolver.apply(claims);
+	}
+
+	public Claims extractAllClaims(String token) {
+		return Jwts.parser()
+				.setSigningKey(JWT_SECRET)
+				.parseClaimsJws(token)
+				.getBody();
 	}
 
 }

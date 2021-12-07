@@ -3,6 +3,7 @@ package com.alkemy.ong.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.*;
@@ -23,7 +24,7 @@ public class UserRequest {
     private String email;
 
     @NotBlank(message = "Password is necessary.")
-    @Size(min = 5, max = 15, message = "Password must be between 5 and 15 characters.")
+    @Length(min = 5, message = "Password must be min 5  characters.")
     private String password;
 
     @Nullable

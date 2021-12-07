@@ -6,16 +6,19 @@ import java.util.Optional;
 
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.dto.UserRequest;
+import com.alkemy.ong.dto.UserUpdateDto;
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.security.dto.LoggedUserDto;
 import com.alkemy.ong.exception.EmailExistException;
 
 public interface IUserService {
-
     void makeAdmin(String username);
 
 	Optional<User> findByEmail(String email);
 
-	User createUser(UserRequest userRequest) throws EmailExistException;
+	LoggedUserDto createUser(UserRequest userRequest) throws EmailExistException;
 
 	List<UserDto> getUsers();
+
+	UserUpdateDto update(Long id, UserUpdateDto userUpdateDto);
 }

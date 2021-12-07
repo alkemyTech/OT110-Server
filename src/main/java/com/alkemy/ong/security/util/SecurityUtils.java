@@ -1,15 +1,17 @@
-package com.alkemy.ong.util;
+package com.alkemy.ong.security.util;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+
+@Service
 public class SecurityUtils {
 
     public final static String ROLE_PREFIX = "ROLE_";
     public final static String AUTH_HEADER = "authorization";
-    public final static String AUTH_TOKEN_TYPE = "Bearer";
+    public final static String AUTH_TOKEN_TYPE = "Bearer ";
     public final static String AUTH_TOKEN_PREFIX = AUTH_TOKEN_TYPE + " ";
 
     public static SimpleGrantedAuthority convertToAuthority(String role){
@@ -24,6 +26,6 @@ public class SecurityUtils {
             return bearerToken.substring(7);
         }
         return null;
-    }	
+    }
 	
 }

@@ -1,4 +1,3 @@
-
 package com.alkemy.ong.dto;
 
 import lombok.AllArgsConstructor;
@@ -13,12 +12,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
-    private Long id;
-    private String name;
-    private String description;
-    private String image;
-    private String dateCreation;
-    private String dateUpdate;
 
+public class UserUpdateDto {
+
+    private Long userId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String photo;
+    private String password;
 }

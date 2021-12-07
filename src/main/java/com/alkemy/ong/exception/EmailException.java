@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 public class EmailException extends Exception{
 
-	private static final long serialVersionUID = 1L;
-	private String message;
+    private static final long serialVersionUID = 1L;
+    private String message;
     private HttpStatus status;
 
 }

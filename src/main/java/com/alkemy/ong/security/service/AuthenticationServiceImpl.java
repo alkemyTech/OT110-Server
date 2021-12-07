@@ -1,5 +1,4 @@
 package com.alkemy.ong.security.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +21,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     @Autowired
     private IJwtProvider jwtProvider;
 
+
     @Override
     public LoggedUserDto signInAndReturnJWT(LoginDto signInRequest){
         Authentication authentication = authenticationManager.authenticate(
@@ -32,7 +32,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         User signInUser = userDetails.getUser();
         signInUser.setToken(jwt);
         LoggedUserDto loggedUser = new LoggedUserDto();
-        loggedUser.setEmail(signInUser.getEmail());
         loggedUser.setToken(signInUser.getToken());
         return loggedUser;
     }
