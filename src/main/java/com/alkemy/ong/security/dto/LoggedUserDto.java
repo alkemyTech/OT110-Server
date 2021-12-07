@@ -13,7 +13,6 @@ import lombok.ToString;
 @ToString
 public class LoggedUserDto {
 
-	private String email;
 	private String token;
 	
 }
