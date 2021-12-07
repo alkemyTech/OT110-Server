@@ -1,4 +1,4 @@
-package com.alkemy.ong.util;
+package com.alkemy.ong.security.util;
 
 import javax.servlet.http.HttpServletRequest;
 

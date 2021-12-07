@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.security.util.SecurityUtils;
 import com.alkemy.ong.service.IUserService;
-import com.alkemy.ong.util.SecurityUtils;
 
 import java.util.Set;
 

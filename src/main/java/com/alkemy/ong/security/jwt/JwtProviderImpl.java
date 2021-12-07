@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.alkemy.ong.security.service.UserDetailsImpl;
-import com.alkemy.ong.util.SecurityUtils;
+import com.alkemy.ong.security.util.SecurityUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
