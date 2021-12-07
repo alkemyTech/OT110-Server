@@ -32,7 +32,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         User signInUser = userDetails.getUser();
         signInUser.setToken(jwt);
         LoggedUserDto loggedUser = new LoggedUserDto();
-        loggedUser.setEmail(signInUser.getEmail());
         loggedUser.setToken(signInUser.getToken());
         return loggedUser;
     }
