@@ -11,7 +11,7 @@ public class SecurityUtils {
 
     public final static String ROLE_PREFIX = "ROLE_";
     public final static String AUTH_HEADER = "authorization";
-    public final static String AUTH_TOKEN_TYPE = "Bearer ";
+    public final static String AUTH_TOKEN_TYPE = "Bearer";
     public final static String AUTH_TOKEN_PREFIX = AUTH_TOKEN_TYPE + " ";
 
     public static SimpleGrantedAuthority convertToAuthority(String role){
