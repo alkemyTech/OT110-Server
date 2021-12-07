@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.UserDto;
+import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class UserController {
     private final IUserService  iUserService;
 
     @GetMapping()
-    @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
+    @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<List<UserDto>> getUsers(){
             List<UserDto> list = iUserService.getUsers();
             return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);

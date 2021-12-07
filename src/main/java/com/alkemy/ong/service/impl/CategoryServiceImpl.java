@@ -13,10 +13,12 @@ import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService{
     
     public  final CategoryRepository categoryRepository;
-    
+    private final MessageSource messageSource;
     
     @Override
     public CategoryDto findById(Long id){
@@ -49,12 +51,14 @@ public class CategoryServiceImpl implements ICategoryService{
     @Override
     public List<CategoryByNameDto> findByName() {
 
+        String categoryListIsEmpty = messageSource.getMessage("category.listEmpty", null, Locale.US);
+
         List<CategoryByNameDto> categoryByNameDto = categoryRepository.findAll()
                 .stream()
                 .map(name -> mapCategoryToCategoryDto(name))
                 .collect(Collectors.toList());
         if(categoryByNameDto.isEmpty()){
-            throw new NotFoundException("Category List is empty");
+            throw new NotFoundException(categoryListIsEmpty);
         }
         return categoryByNameDto;
     }

@@ -9,8 +9,10 @@ import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
 import com.alkemy.ong.service.IUserService;
 import com.alkemy.ong.service.RoleService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,11 +22,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-
+@AllArgsConstructor
 public class UserServiceImpl implements IUserService, UserDetailsService {
 	
 	@Autowired
@@ -37,6 +40,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Autowired
     private RoleService roleService;
+
+    private final MessageSource messageSource;
 
 
     @Transactional
@@ -62,11 +67,13 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public List<UserDto> getUsers() {
 
+        String userListIsEmpty = messageSource.getMessage("user.listEmpty", null, Locale.US);
+
         List<UserDto> userDto = userRepository.findAll().stream()
                 .map(this::mapUserToUserDto)
                 .collect(Collectors.toList());
         if(userDto.isEmpty()){
-            throw new NotFoundException("User list is empty");
+            throw new NotFoundException(userListIsEmpty);
         }
         return userDto;
     }
