@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class CategoryRequestUpdate {
 
-	@NotNull(message = "Name Category is necessary.", regexp = "^[A-Za-z\\s]+$" )
+	@NotNull(message = "Name Category is necessary.")
 	private String name;
 	@Nullable
 	private String description;
