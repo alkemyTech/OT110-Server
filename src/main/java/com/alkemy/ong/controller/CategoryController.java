@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,11 +40,19 @@ public class CategoryController {
 			return new ResponseEntity<>(e.toString(), HttpStatus.CONFLICT);
 		}
     }
-    
+
     @PutMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequestUpdate category, @PathVariable("id") Long id){
     	return new ResponseEntity<>(iCategoryService.updateCategory(category, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole(RoleEnum.ADMIN.getName())")
+    public ResponseEntity<?> delete(@Valid @PathVariable("id") Long id ) {
+       
+    	return iCategoryService.delete(id);
+		
     }
     
 }
