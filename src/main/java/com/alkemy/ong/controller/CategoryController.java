@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
      
     @Autowired
-    private ICategoryService iCategoryService;
+    private ICategoryService categoryService;
     
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole(T(com.alkemy.ong.security.RoleEnum).ADMIN)")
     public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ) {
         try {
-		CategoryDto categoryDto = iCategoryService.findById(id);
+		CategoryDto categoryDto = categoryService.findById(id);
                 if (categoryDto == null) {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
