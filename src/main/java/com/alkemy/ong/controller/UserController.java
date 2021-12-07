@@ -3,7 +3,10 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.IUserService;
-import lombok.AllArgsConstructor;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,20 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/users")
-@AllArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 
-    private final IUserService  iUserService;
+    @Autowired
+    private IUserService  userService;
 
-    @GetMapping()
+    @GetMapping("/users")
     @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<List<UserDto>> getUsers(){
-            List<UserDto> list = iUserService.getUsers();
+            List<UserDto> list = userService.getUsers();
             return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
     }
-}
 
+}

@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ICategoryService {
 
-    public CategoryDto findById(Long id);
-
     public List<CategoryByNameDto> findByName();
+
+    CategoryDto findById(Long id);
 }

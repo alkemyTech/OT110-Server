@@ -1,7 +1,10 @@
 package com.alkemy.ong.dto;
 
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -9,8 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-
-    private Integer userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;

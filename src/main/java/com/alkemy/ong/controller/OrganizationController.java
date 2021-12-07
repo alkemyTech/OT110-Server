@@ -19,7 +19,7 @@ import com.alkemy.ong.dto.OrganizationResponse;
 import com.alkemy.ong.service.IOrganizationService;
 
 @RestController
-@RequestMapping("organization")
+@RequestMapping("/organization")
 public class OrganizationController {
 
    
