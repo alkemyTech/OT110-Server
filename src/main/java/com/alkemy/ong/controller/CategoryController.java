@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
 	
     @Autowired
-    private ICategoryService iCategoryService;
+    private ICategoryService categoryService;
     
     @GetMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ) {
         try {
-		CategoryDto categoryDto = iCategoryService.findById(id);
+		CategoryDto categoryDto = categoryService.findById(id);
                 if (categoryDto == null) {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
@@ -44,14 +44,14 @@ public class CategoryController {
     @PutMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequestUpdate category, @PathVariable("id") Long id){
-    	return new ResponseEntity<>(iCategoryService.updateCategory(category, id), HttpStatus.OK);
+    	return new ResponseEntity<>(categoryService.updateCategory(category, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole(RoleEnum.ADMIN.getName())")
     public ResponseEntity<?> delete(@Valid @PathVariable("id") Long id ) {
        
-    	return iCategoryService.delete(id);
+    	return categoryService.delete(id);
 		
     }
     
