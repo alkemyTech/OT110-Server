@@ -36,7 +36,7 @@ public class Contact {
 	private String name;
 	
 	@Nullable
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String phone;
 	
 	@NotNull(message = "Email cannot be null")
