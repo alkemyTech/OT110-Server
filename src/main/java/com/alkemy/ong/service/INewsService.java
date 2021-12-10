@@ -1,6 +1,8 @@
 
 package com.alkemy.ong.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.alkemy.ong.dto.NewsRequest;
 import com.alkemy.ong.dto.NewsResponse;
 
