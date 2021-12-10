@@ -18,4 +18,7 @@ public class SlideRequest {
 
     private Integer orderSlide;
 
+    @NotNull(message = "organizationId cannot be null")
+    private Long organizationId;
+
 }

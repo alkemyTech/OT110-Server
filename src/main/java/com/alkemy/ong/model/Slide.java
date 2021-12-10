@@ -8,16 +8,13 @@ package com.alkemy.ong.model;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-
-
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
 /**
@@ -25,6 +22,7 @@ import lombok.Data;
  * @author mateo
  */
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="slides")
 public class Slide {
@@ -44,5 +42,10 @@ public class Slide {
     
     @NotNull(message="the organizationId cannot be empity")
     private Long organizationId;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization")
+    private @NonNull Organization organization;
     
 }

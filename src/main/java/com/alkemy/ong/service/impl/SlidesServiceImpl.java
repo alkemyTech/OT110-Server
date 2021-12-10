@@ -1,16 +1,16 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.aws.IAWSS3Service;
-import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.dto.SlideRequest;
+import com.alkemy.ong.dto.SlideResponse;
 import com.alkemy.ong.exception.NotFoundException;
-import com.alkemy.ong.model.News;
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.model.Slide;
 import com.alkemy.ong.repository.SlideRepository;
 import com.alkemy.ong.service.IOrganizationService;
 import com.alkemy.ong.service.ISlidesService;
 import com.alkemy.ong.util.ContentTypeEnum;
+import com.alkemy.ong.util.UpdateFields;
 import io.jsonwebtoken.lang.Strings;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
@@ -33,6 +33,7 @@ public class SlidesServiceImpl implements ISlidesService{
     private final IOrganizationService organizationService;
     private final SlideRepository slideRepository;
     private final MessageSource messageSource;
+    private final UpdateFields updateFields;
 
     @Override
     public Slide addSlide(SlideRequest slide) throws Exception {
@@ -96,5 +97,23 @@ public class SlidesServiceImpl implements ISlidesService{
         return outputFile;
     }
 
+    @Override
+    public SlideResponse updateSlidesById(Long id, SlideRequest slide) {
+        String slideNotFound = messageSource.getMessage("slide.notFound", null, Locale.US);
+
+        Slide slideToUpdate = slideRepository.findById(id).orElseThrow(() -> new NotFoundException(slideNotFound));
+
+        updateFields.updateIfNotBlankAndNotEqual(slide.getText(), slideToUpdate.getText(), slideToUpdate::setText, "name");
+        updateFields.updateIfNotBlankAndNotEqual(slide.getOrderSlide(), slideToUpdate.getOrderSlide(), slideToUpdate::setOrderSlide, "content");
+        updateFields.updateIfNotBlankAndNotEqual(slide.getBase64Image(), slideToUpdate.getImageUrl(), slideToUpdate::setImageUrl, "image");
+
+        Organization organizationToUpdate = organizationService.findById(slideToUpdate.getOrganizationId());
+        Organization organization = organizationService.findById(slide.getOrganizationId());
+        updateFields.updateIfNotBlankAndNotEqual(organization, organizationToUpdate, slideToUpdate::setOrganization, "organization");
+
+        return new ModelMapper()
+                .typeMap(Slide.class, SlideResponse.class)
+                .map(slideToUpdate);
+    }
 
 }
