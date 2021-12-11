@@ -2,6 +2,7 @@
 
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.dto.CategoryDto;
 import com.alkemy.ong.dto.NewsRequest;
 import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.exception.NotFoundException;
@@ -9,6 +10,8 @@ import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.News;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.NewsRepository;
+import com.alkemy.ong.security.RoleEnum;
+import com.alkemy.ong.service.ICategoryService;
 import com.alkemy.ong.service.INewsService;
 import com.alkemy.ong.util.UpdateFields;
 import lombok.AllArgsConstructor;
@@ -30,6 +33,37 @@ public class NewsServiceImpl implements INewsService {
     private final MessageSource messageSource;
     private final UpdateFields updateFields;
 
+
+    public NewsRequest createNews(NewsRequest newsDto){
+        News entity = newsDTO2Entity(newsDto);
+        News entitySaved = newsRepository.save(entity);
+        NewsRequest result = newsEntity2DTO(entitySaved);
+        return result;
+
+    }
+
+    public News newsDTO2Entity(NewsRequest newsDto){
+        News news = new News();
+        news.setName(newsDto.getName());
+        news.setContent(newsDto.getContent());
+        news.setImage(newsDto.getImage());
+        String messageError = messageSource.getMessage("category.notFound", null, Locale.US);
+        if (!categoryRepository.existsById(newsDto.getCategoryId())) {
+            throw new NotFoundException(messageError);
+        }
+        news.setCategory(categoryRepository.getById(newsDto.getCategoryId()));
+        return news;
+    }
+
+    public NewsRequest newsEntity2DTO(News news){
+        NewsRequest dto = new NewsRequest();
+        dto.setName(news.getName());
+        dto.setContent(news.getContent());
+        dto.setImage(news.getImage());
+        dto.setCategoryId(news.getCategory().getId());
+
+        return dto;
+    }
 
     @Override
     public NewsResponse findById(Long id) {

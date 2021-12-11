@@ -278,9 +278,9 @@
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
                         <p style="text-align: center;"><span
-                            style="font-size: 24px;"><strong>Â¡Bienvenido!</strong></span></p>
+                            style="font-size: 24px;"><strong>¡Bienvenido!</strong></span></p>
                         <p style="text-align: center;">&nbsp;</p>
-                        <p style="text-align: center;"><span style="font-size: 16px;">Hola ${name} te has Registrado Exitosamente!</span></p>
+                        <p style="text-align: center;"><span style="font-size: 16px;">Hola ${name} te has registrado exitosamente!</span></p>
                       </div>
 
                     </td>

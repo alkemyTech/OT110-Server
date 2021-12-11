@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class SlideRequest {
 
-    @NotBlank(message="image cannot be empity")
+    @NotBlank(message="image cannot be empty")
     private String base64Image;
 
-    @NotBlank(message="text cannot be empity")
+    @NotBlank(message="text cannot be empty")
     private String text;
 
     private Integer orderSlide;

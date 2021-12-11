@@ -4,6 +4,7 @@ import com.alkemy.ong.aws.IAWSS3Service;
 import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.dto.SlideRequest;
 import com.alkemy.ong.exception.NotFoundException;
+import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.News;
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.model.Slide;
@@ -16,6 +17,8 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -66,6 +69,17 @@ public class SlidesServiceImpl implements ISlidesService{
 
         return slideRepository.save(slideToAdd);
 
+    }
+
+    @Override
+    public ResponseEntity<?> delete(Long id) {
+        String notFoundSlideMessage = messageSource.getMessage("slide.notFound", null, Locale.US);
+        String isDeletedSlideMessage = messageSource.getMessage("slide.isDeleted", null, Locale.US);
+
+        Slide slide = slideRepository.findById(id)
+                .orElseThrow(()->new NotFoundException(notFoundSlideMessage));
+        slideRepository.delete(slide);
+        return new ResponseEntity<>(isDeletedSlideMessage, HttpStatus.OK);
     }
 
     private void automaticOrder(SlideRequest slide) {

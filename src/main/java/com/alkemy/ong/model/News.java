@@ -44,6 +44,8 @@ public class News {
     @LastModifiedDate
     private LocalDateTime dateUpdate;
 
+    private String type = "news";
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "categoryId")
