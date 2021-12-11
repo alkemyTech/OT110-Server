@@ -13,33 +13,27 @@
     #outlook a {
       padding: 0;
     }
-
     .ReadMsgBody {
       width: 100%;
     }
-
     .ExternalClass {
       width: 100%;
     }
-
     .ExternalClass * {
       line-height: 100%;
     }
-
     body {
       margin: 0;
       padding: 0;
       -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
     }
-
     table,
     td {
       border-collapse: collapse;
       mso-table-lspace: 0pt;
       mso-table-rspace: 0pt;
     }
-
     img {
       border: 0;
       height: auto;
@@ -48,7 +42,6 @@
       text-decoration: none;
       -ms-interpolation-mode: bicubic;
     }
-
     p {
       display: block;
       margin: 13px 0;
@@ -81,7 +74,6 @@
       table.full-width-mobile {
         width: 100% !important;
       }
-
       td.full-width-mobile {
         width: auto !important;
       }
@@ -91,84 +83,67 @@
     .hide_on_mobile {
       display: none !important;
     }
-
     @media only screen and (min-width: 480px) {
       .hide_on_mobile {
         display: block !important;
       }
     }
-
     .hide_section_on_mobile {
       display: none !important;
     }
-
     @media only screen and (min-width: 480px) {
       .hide_section_on_mobile {
         display: table !important;
       }
     }
-
     .hide_on_desktop {
       display: block !important;
     }
-
     @media only screen and (min-width: 480px) {
       .hide_on_desktop {
         display: none !important;
       }
     }
-
     .hide_section_on_desktop {
       display: table !important;
     }
-
     @media only screen and (min-width: 480px) {
       .hide_section_on_desktop {
         display: none !important;
       }
     }
-
     [owa] .mj-column-per-100 {
       width: 100% !important;
     }
-
     [owa] .mj-column-per-50 {
       width: 50% !important;
     }
-
     [owa] .mj-column-per-33 {
       width: 33.333333333333336% !important;
     }
-
     p,
     h1,
     h2,
     h3 {
       margin: 0px;
     }
-
     a {
       text-decoration: none;
       color: inherit;
     }
-
     @media only print and (min-width:480px) {
       .mj-column-per-100 {
         width: 100% !important;
       }
-
       .mj-column-per-40 {
         width: 40% !important;
       }
-
       .mj-column-per-60 {
         width: 60% !important;
       }
-
       .mj-column-per-50 {
         width: 50% !important;
       }
-
       mj-column-per-33 {
         width: 33.333333333333336% !important;
       }
@@ -278,9 +253,9 @@
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
                         <p style="text-align: center;"><span
-                            style="font-size: 24px;"><strong>Â¡Bienvenido!</strong></span></p>
+                            style="font-size: 24px;"><strong>¡Bienvenido!</strong></span></p>
                         <p style="text-align: center;">&nbsp;</p>
-                        <p style="text-align: center;"><span style="font-size: 16px;">Hola ${name} te has Registrado Exitosamente!</span></p>
+                        <p style="text-align: center;"><span style="font-size: 16px;">Hola ${name} te has registrado exitosamente!</span></p>
                       </div>
 
                     </td>
