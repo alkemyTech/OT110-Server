@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.ContactRequestDto;
+import com.alkemy.ong.dto.ContactResponseDto;
 import com.alkemy.ong.model.Contact;
 import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.IContactService;
@@ -28,7 +29,7 @@ public class ContactController {
 
     @GetMapping()
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<List<ContactRequestDto>> findAll() {
-        return new ResponseEntity<List<ContactRequestDto>>(contactService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<ContactResponseDto>> findAll() {
+        return new ResponseEntity<List<ContactResponseDto>>(contactService.getAll(), HttpStatus.OK);
     }
 }

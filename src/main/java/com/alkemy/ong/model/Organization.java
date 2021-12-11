@@ -52,6 +52,15 @@ public class Organization {
     @Nullable
     private String aboutUsText;
 
+    @Nullable
+    private String facebookUrl;
+
+    @Nullable
+    private String instagramUrl;
+
+    @Nullable
+    private String linkedinUrl;
+
     @CreatedDate
     @NotNull
     @Column(nullable = false, updatable = false)

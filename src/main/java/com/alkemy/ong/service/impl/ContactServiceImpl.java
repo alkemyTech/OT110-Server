@@ -1,19 +1,20 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.ContactRequestDto;
+import com.alkemy.ong.dto.ContactResponseDto;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.Contact;
 import com.alkemy.ong.repository.ContactRepository;
 import lombok.AllArgsConstructor;
 
 import com.alkemy.ong.service.IContactService;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -37,22 +38,25 @@ public class ContactServiceImpl implements IContactService{
 	}
 
 	@Override
-	public List<ContactRequestDto> getAll() {
-		String contactListNotFound = messageSource.getMessage("contact.listEmpty",null, Locale.US);
+	public List<ContactResponseDto> getAll() {
+		String contactListNotFound = messageSource.getMessage("contact.listEmpty", null, Locale.US);
 
-		List<ContactRequestDto> listContact = contactRepository.findAll()
-				.stream()
-				.map(this::mapContactToContactRequestDto)
-				.collect(Collectors.toList());
-		if(listContact.isEmpty()){
+		List<ContactResponseDto> contactResponseDto = new ArrayList<>();
+
+		contactRepository.findAll().stream().forEach(contact -> {
+			ContactResponseDto contactResponseDto1 = new ContactResponseDto();
+			contactResponseDto1.setName(contact.getName());
+			contactResponseDto1.setPhone(contact.getPhone());
+			contactResponseDto1.setEmail(contact.getEmail());
+			contactResponseDto1.setMessage(contact.getMessage());
+			contactResponseDto.add(contactResponseDto1);
+		});
+
+		if (contactResponseDto.isEmpty()) {
 			throw new NotFoundException(contactListNotFound);
 		}
-		return listContact;
-	}
 
-	private ContactRequestDto mapContactToContactRequestDto(Contact contact){
-		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(contact, ContactRequestDto.class);
+		return contactResponseDto;
 	}
 
 }

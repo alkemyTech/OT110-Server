@@ -16,5 +16,7 @@ public class OrganizationDto {
     private String email;
     private String welcomeText;
     private String aboutUsText;
-
+    private String facebookUrl;
+    private String instagramUrl;
+    private String linkedinUrl;
 }

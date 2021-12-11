@@ -82,9 +82,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<UserDto> getUsers() {
 
+        String listNotFound = messageSource.getMessage("user.listEmpty",null,Locale.US);
+
         List<UserDto> userDto = userRepository.findAll().stream()
                 .map(this::mapUserToUserDto)
                 .collect(Collectors.toList());
+        if(userDto.isEmpty()){
+            throw new NotFoundException(listNotFound);
+        }
         return userDto;
     }
 

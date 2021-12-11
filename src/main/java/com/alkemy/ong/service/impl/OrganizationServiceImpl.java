@@ -1,28 +1,22 @@
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.dto.OrganizationPublicDto;
 import com.alkemy.ong.dto.OrganizationRequest;
 import com.alkemy.ong.dto.OrganizationResponse;
-import com.alkemy.ong.dto.OrganizationPublicDto;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.service.IOrganizationService;
 import com.alkemy.ong.util.UpdateFields;
 import lombok.RequiredArgsConstructor;
-import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 
 import javax.transaction.Transactional;
-
 import java.time.LocalDateTime;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +48,9 @@ public class OrganizationServiceImpl implements IOrganizationService {
         updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getPhone(), organization.getPhone(), organization::setPhone , "phone");
         updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getAddress(), organization.getAddress(), organization::setAddress , "address");
         updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getAboutUsText(), organization.getAboutUsText(), organization::setAboutUsText , "about us text");
+        updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getFacebookUrl(), organization.getFacebookUrl(), organization::setFacebookUrl , "facebookUrl");
+        updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getInstagramUrl(), organization.getInstagramUrl(), organization::setInstagramUrl , "instagramUrl");
+        updateFields.updateIfNotEmptyAndNotEqual(organizationRequest.getLinkedinUrl(), organization.getLinkedinUrl(), organization::setLinkedinUrl , "linkedinUrl");
 
         if (updateFields.isHasUpdate()){
             organization.setDateUpdate(LocalDateTime.now());
@@ -65,7 +62,10 @@ public class OrganizationServiceImpl implements IOrganizationService {
                                         ,organization.getPhone()
                                         ,organization.getEmail()
                                         ,organization.getWelcomeText()
-                                        , organization.getAboutUsText());
+                                        ,organization.getAboutUsText()
+                                        ,organization.getFacebookUrl()
+                                        ,organization.getInstagramUrl()
+                                        ,organization.getLinkedinUrl());
     }
 
     public Organization getOrganization() {
@@ -81,6 +81,9 @@ public class OrganizationServiceImpl implements IOrganizationService {
         dto.setImage(model.getImage());
         dto.setAddress(model.getAddress());
         dto.setPhone(model.getPhone());
+        dto.setFacebookUrl(model.getFacebookUrl());
+        dto.setInstagramUrl(model.getInstagramUrl());
+        dto.setLinkedinUrl(model.getLinkedinUrl());
 
         return dto;
     }

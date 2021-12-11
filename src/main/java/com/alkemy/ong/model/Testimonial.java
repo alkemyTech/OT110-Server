@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "testimonials")
-@SQLDelete(sql = "UPDATE Testimonial SET enabled = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE testimonials SET enabled = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 public class Testimonial {
 
