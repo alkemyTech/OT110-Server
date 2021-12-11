@@ -6,6 +6,8 @@ import com.alkemy.ong.repository.ContactRepository;
 import lombok.AllArgsConstructor;
 
 import com.alkemy.ong.service.IContactService;
+import com.alkemy.ong.service.IEmailService;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class ContactServiceImpl implements IContactService{
 
 	private final ContactRepository contactRepository;
+	private final IEmailService emailService;
 
 	@Override
 	public Contact addContact(ContactRequestDto contactRequestDto) throws Exception {
@@ -21,8 +24,9 @@ public class ContactServiceImpl implements IContactService{
 		contact.setEmail(contactRequestDto.getEmail());
 		contact.setMessage(contactRequestDto.getMessage());
 		contact.setPhone(contact.getPhone());
-
-		return contactRepository.save(contact);
+		Contact contactSaved = contactRepository.save(contact);
+		emailService.sendWelcomeEmail(contactSaved.getEmail(), contactSaved.getName(), "");
+		return contactSaved;
 
 
 	}
