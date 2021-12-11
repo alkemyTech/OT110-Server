@@ -23,7 +23,7 @@ public class ContactController {
     private final IContactService contactService;
 
     @PostMapping
-    @PreAuthorize(SecurityConstant.USER)
+    @PreAuthorize(SecurityConstant.ADMIN)
     public ResponseEntity<Contact> addContact(@Valid @RequestBody ContactRequestDto contactRequest) throws Exception {
         return new ResponseEntity<>(contactService.addContact(contactRequest), HttpStatus.OK);
     }
