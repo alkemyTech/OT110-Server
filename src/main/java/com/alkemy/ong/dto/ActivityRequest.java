@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
-
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -18,4 +17,5 @@ public class ActivityRequest {
     private String content;
     @URL(message = "Image field must be a valid url")
     private String image;
+
 }

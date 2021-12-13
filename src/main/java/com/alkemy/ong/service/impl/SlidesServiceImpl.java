@@ -3,6 +3,7 @@ package com.alkemy.ong.service.impl;
 import com.alkemy.ong.aws.IAWSS3Service;
 import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.dto.SlideRequest;
+import com.alkemy.ong.dto.SlideResponse;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.News;
@@ -20,7 +21,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
@@ -109,6 +109,15 @@ public class SlidesServiceImpl implements ISlidesService{
         }
         return outputFile;
     }
-
-
+    
+    @Override
+    public SlideResponse detail(Long id) {
+    	 String notFoundSlideMessage = messageSource.getMessage("slide.notFound", null, Locale.US);
+         Slide slide = slideRepository.findById(id).orElseThrow(()->new NotFoundException(notFoundSlideMessage));
+         
+         return new SlideResponse(slide.getImageUrl(),
+        		 				  slide.getText(),
+        		                  slide.getOrderSlide(),
+        		                  slide.getOrganizationId());
+    }
 }

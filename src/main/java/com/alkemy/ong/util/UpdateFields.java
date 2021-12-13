@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +16,12 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 @Getter
 public class UpdateFields {
-
-    private final MessageSource messageSource;
+	
+	
+    public final MessageSource messageSource;
     private boolean hasUpdate = Boolean.FALSE;
+   
+    
 
     public <T> void updateIfNotBlankAndNotEqual(T source , T destination, Consumer<T> update, String parameterName){
         String notBeBlankMessage = messageSource.getMessage("api.blank", null, Locale.US);

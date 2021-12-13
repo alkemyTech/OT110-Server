@@ -8,7 +8,12 @@ import com.alkemy.ong.repository.ContactRepository;
 import lombok.AllArgsConstructor;
 
 import com.alkemy.ong.service.IContactService;
+
 import org.springframework.context.MessageSource;
+
+import com.alkemy.ong.service.IEmailService;
+
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,7 +26,7 @@ import java.util.Locale;
 public class ContactServiceImpl implements IContactService{
 
 	private final ContactRepository contactRepository;
-
+	private final IEmailService emailService;
 	private final MessageSource messageSource;
 
 	@Override
@@ -31,8 +36,9 @@ public class ContactServiceImpl implements IContactService{
 		contact.setEmail(contactRequestDto.getEmail());
 		contact.setMessage(contactRequestDto.getMessage());
 		contact.setPhone(contact.getPhone());
-
-		return contactRepository.save(contact);
+		Contact contactSaved = contactRepository.save(contact);
+		emailService.sendWelcomeEmail(contactSaved.getEmail(), contactSaved.getName(), "");
+		return contactSaved;
 
 
 	}
