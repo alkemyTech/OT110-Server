@@ -39,8 +39,8 @@ public class CategoryServiceImpl implements ICategoryService{
     @Override
     public CategoryDto findById(Long id) throws NotFoundException{
 		String notFoundCategoryMessage = messageSource.getMessage("category.notFound", null, Locale.US);
-        Category rta= categoryRepository.findById(id).orElseThrow(()-> new NotFoundException(notFoundCategoryMessage));
-		return categoryMapper.mapEntityToDto(rta);
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new NotFoundException(notFoundCategoryMessage));
+		return categoryMapper.mapEntityToDto(category);
     }
     
     @Override
