@@ -21,7 +21,7 @@ import java.util.List;
 public interface ICategoryService {
 
 
-    public List<CategoryByNameDto> findByName();
+    public List<CategoryByNameDto> findAllByName();
 
     public CategoryDto createCategory(@Valid CategoryRequestUpdate category);
 

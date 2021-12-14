@@ -77,13 +77,13 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public List<CategoryByNameDto> findByName() {
+    public List<CategoryByNameDto> findAllByName() {
 
         String categoryListIsEmpty = messageSource.getMessage("category.listEmpty", null, Locale.US);
 
         List<CategoryByNameDto> categoryByNameDto = categoryRepository.findAll()
                 .stream()
-                .map(name -> categoryMapper.mapCategoryToCategoryDto(name))
+                .map(category -> categoryMapper.mapCategoryToCategoryDto(category))
                 .collect(Collectors.toList());
         if(categoryByNameDto.isEmpty()){
             throw new NotFoundException(categoryListIsEmpty);

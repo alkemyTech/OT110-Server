@@ -30,8 +30,8 @@ public class CategoryController {
 
     @GetMapping()
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<List<CategoryByNameDto>> findCategoriesByName(){
-            List<CategoryByNameDto> listCategories = categoryService.findByName();
+    public ResponseEntity<List<CategoryByNameDto>> findAllCategoriesByName(){
+            List<CategoryByNameDto> listCategories = categoryService.findAllByName();
             return new ResponseEntity<List<CategoryByNameDto>>(listCategories, HttpStatus.OK);
     }
 
