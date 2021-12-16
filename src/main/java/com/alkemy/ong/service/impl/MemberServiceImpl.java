@@ -1,21 +1,47 @@
 package com.alkemy.ong.service.impl;
 
+
 import com.alkemy.ong.dto.MemberRequest;
-import com.alkemy.ong.dto.MemberResponse;
-import com.alkemy.ong.model.Member;
-import com.alkemy.ong.repository.MemberRepository;
-import com.alkemy.ong.service.IMemberService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
+import org.springframework.context.MessageSource;
+
+import com.alkemy.ong.dto.MemberResponse;
+import com.alkemy.ong.exception.EmptyDataException;
+import com.alkemy.ong.model.Member;
+import com.alkemy.ong.repository.MemberRepository;
+import com.alkemy.ong.service.IMemberService;
+import com.alkemy.ong.mapper.MemberMapper;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
-@AllArgsConstructor
-public class MemberServiceImpl implements IMemberService {
+public class MemberServiceImpl implements IMemberService{
 
-    private final MemberRepository memberRepository;
+	private final MemberRepository memberRepository;
+	private final MemberMapper memberMapper;
+	private final MessageSource messageSource;
+	
+	@Override
+	public List<MemberResponse> getAllMembers(){
+		String memberListIsEmpty = messageSource.getMessage("member.listEmpty", null, Locale.US);
+		List<Member> listMember = memberRepository.findAll();
+		List<MemberResponse> listMemberResponse = new ArrayList<>();
+		listMember.stream().forEach(member -> {
+			MemberResponse memberResponse = memberMapper.memberModel2DTO(member);
+			listMemberResponse.add(memberResponse);
+		});
+        if(listMemberResponse.isEmpty()){
+            throw new EmptyDataException(memberListIsEmpty);
+        }		
+		return listMemberResponse;
+	}
 
     @Override
     public MemberResponse createMember(MemberRequest memberRequest) {
@@ -26,23 +52,8 @@ public class MemberServiceImpl implements IMemberService {
         member.setLinkedinUrl(memberRequest.getInstagramUrl());
         member.setImage(memberRequest.getImage());
         member.setDescription(memberRequest.getDescription());
-        member.setDateCreation(LocalDateTime.now());
-        member.setDateUpdate(LocalDateTime.now());
         Member memberCreate = memberRepository.save(member);
-        return generateMember(memberCreate);
-    }
-
-    private MemberResponse generateMember(Member member){
-        MemberResponse memberResponse = new MemberResponse();
-        memberResponse.setName(member.getName());
-        memberResponse.setFacebookUrl(member.getFacebookUrl());
-        memberResponse.setInstagramUrl(member.getInstagramUrl());
-        memberResponse.setLinkedinUrl(member.getInstagramUrl());
-        memberResponse.setImage(member.getImage());
-        memberResponse.setDescription(member.getDescription());
-        memberResponse.setDateCreation(member.getDateCreation().toString());
-        memberResponse.setDateUpdate(member.getDateUpdate().toString());
-        return memberResponse;
+        return memberMapper.memberModel2DTO(memberCreate);
     }
 
 }

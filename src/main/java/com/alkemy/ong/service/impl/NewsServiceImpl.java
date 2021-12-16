@@ -112,6 +112,12 @@ public class NewsServiceImpl implements INewsService {
         newsRepository.delete(news);
         return new ResponseEntity<>(isDeletedNewsMessage, HttpStatus.OK);
     }
+
+    @Override
+    public News findByIdReturnNews(Long id) {
+        String newsNotFound = messageSource.getMessage("news.notFound", null, Locale.US);
+        return newsRepository.findById(id).orElseThrow(() -> new NotFoundException(newsNotFound));
+    }
 }
 
 

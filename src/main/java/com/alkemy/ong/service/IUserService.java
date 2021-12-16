@@ -24,4 +24,6 @@ public interface IUserService {
     UserUpdateDto update(Long id, UserUpdateDto userUpdateDto);
 
     ResponseEntity<?> deleteById(Long id);
+
+    User findById(Long id);
 }

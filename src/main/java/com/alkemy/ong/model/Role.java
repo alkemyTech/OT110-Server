@@ -17,12 +17,11 @@ import com.alkemy.ong.security.RoleEnum;
 
 
 
-
-@Entity
-@Table(name = "roles")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Entity
+@Table(name = "roles")
 @EntityListeners(AuditingEntityListener.class)
 public class Role {
 	

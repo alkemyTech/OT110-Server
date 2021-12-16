@@ -1,18 +1,24 @@
 
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.assembler.CategoryAssembler;
 import com.alkemy.ong.dto.CategoryByNameDto;
 import com.alkemy.ong.dto.CategoryRequestUpdate;
+import com.alkemy.ong.model.Category;
 import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.ICategoryService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @RestController
@@ -21,6 +27,8 @@ import java.util.List;
 public class CategoryController {
 
     private final ICategoryService categoryService;
+    private final CategoryAssembler categoryAssembler;
+    private final PagedResourcesAssembler<Category> pagedResourcesAssembler;
     
     @GetMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
@@ -28,11 +36,14 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping()
-    @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<List<CategoryByNameDto>> findCategoriesByName(){
-            List<CategoryByNameDto> listCategories = categoryService.findByName();
-            return new ResponseEntity<List<CategoryByNameDto>>(listCategories, HttpStatus.OK);
+    @GetMapping(params = "page")
+    @PreAuthorize(SecurityConstant.USER_ADMIN)
+    public ResponseEntity<PagedModel<CategoryByNameDto>> findAllCategoriesByName(Pageable pageable, @RequestParam("page") int page){
+        Page<Category> categoryEntities = categoryService.readAllCategoriesByName(pageable, page);
+        
+        PagedModel<CategoryByNameDto> categoryDtoModel = pagedResourcesAssembler
+                            .toModel(categoryEntities, categoryAssembler);
+        return new ResponseEntity<>(categoryDtoModel,HttpStatus.OK);
     }
 
     

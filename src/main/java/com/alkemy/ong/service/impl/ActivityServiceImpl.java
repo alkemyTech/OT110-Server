@@ -47,10 +47,7 @@ public class ActivityServiceImpl implements IActivityService {
 		 			   					   ,activity.getImage()
 		 			   					   ,activity.getDateCreation().toString()
 		 			   					   ,activity.getDateUpdate().toString());
-                       	
 		}
-	    
-
 
     @Override
     public ActivityResponse createActivity(ActivityRequest activityRequest) {

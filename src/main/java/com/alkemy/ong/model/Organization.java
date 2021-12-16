@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "organizations")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "organizations")
 @SQLDelete(sql = "UPDATE organizations SET enabled = false WHERE id = ?")
 @Where(clause = "enabled=true")
 @EntityListeners(AuditingEntityListener.class)

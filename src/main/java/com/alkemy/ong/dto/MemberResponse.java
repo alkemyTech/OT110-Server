@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberResponse {
 
     private String name;
@@ -18,7 +18,6 @@ public class MemberResponse {
     private String linkedinUrl;
     private String image;
     private String description;
-    private String dateCreation;
-    private String dateUpdate;
 }
+
 
