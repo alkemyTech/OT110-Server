@@ -37,7 +37,7 @@ public class CategoryController {
     }
 
     @GetMapping(params = "page")
-    @PreAuthorize(SecurityConstant.USER)
+    @PreAuthorize(SecurityConstant.USER_ADMIN)
     public ResponseEntity<PagedModel<CategoryByNameDto>> findAllCategoriesByName(Pageable pageable, @RequestParam("page") int page){
         Page<Category> categoryEntities = categoryService.readAllCategoriesByName(pageable, page);
         
