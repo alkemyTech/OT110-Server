@@ -15,6 +15,9 @@ import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,7 @@ public class CategoryServiceImpl implements ICategoryService{
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private final MessageSource messageSource;
+    private static final int SIZE_DEFAULT = 10;
     
     @Override
     public CategoryDto findById(Long id) throws NotFoundException{
@@ -89,6 +93,16 @@ public class CategoryServiceImpl implements ICategoryService{
         }
         return categoryByNameDto;
     }
+
+	@Override
+	public Page<Category> readAllCategoriesByName(Pageable pageable , int page) {
+		String categoryListPageNotFound = messageSource.getMessage("category.pageNotFound", null, Locale.US);
+		pageable = PageRequest.of(page, SIZE_DEFAULT);
+		if (page > categoryRepository.findAll(pageable).getTotalPages()) {
+			throw new NotFoundException(categoryListPageNotFound);
+		}
+		return categoryRepository.findAll(pageable);
+	}
 
 }
 
