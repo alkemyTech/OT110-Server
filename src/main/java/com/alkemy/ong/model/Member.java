@@ -2,6 +2,8 @@ package com.alkemy.ong.model;
 
 
 import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,13 +12,15 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="members")
 @SQLDelete(sql = "UPDATE members SET enabled = false WHERE id = ?")

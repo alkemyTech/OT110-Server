@@ -20,9 +20,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @SQLDelete(sql = "UPDATE user SET enabled = false WHERE userId = ?")
 @Where(clause = "enabled=true")
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id

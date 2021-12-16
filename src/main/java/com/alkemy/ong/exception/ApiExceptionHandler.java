@@ -10,6 +10,8 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import freemarker.template.TemplateException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -123,6 +125,27 @@ public class ApiExceptionHandler {
 	@ResponseBody
 	public ExceptionMessage  returnErrorTemplateException(TemplateException e){
 		return new ExceptionMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), LocalDateTime.now());
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler(EmptyDataException.class)
+	@ResponseBody
+	public ExceptionMessage returnEmptyDataException(EmptyDataException e) {
+		return new ExceptionMessage(HttpStatus.OK.value(), e.getMessage(), LocalDateTime.now());
+	}
+
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseBody
+	public ExceptionMessage  returnErrorAccessDeniedException(AccessDeniedException e){
+		return new ExceptionMessage(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), LocalDateTime.now());
+	}
+
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ExceptionHandler(BadCredentialsException.class)
+	@ResponseBody
+	public ExceptionMessage  returnErrorBadCredentialsException(BadCredentialsException e){
+		return new ExceptionMessage(HttpStatus.FORBIDDEN.value(), e.getMessage(), LocalDateTime.now());
 	}
 
 }

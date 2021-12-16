@@ -17,4 +17,6 @@ public interface INewsService {
 
     ResponseEntity<?> delete(Long id);
 
+    News findByIdReturnNews(Long id);
+
 }
