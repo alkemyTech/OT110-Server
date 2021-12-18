@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class CommentController {
 
     @GetMapping("/posts/{id}/comments")
     @PreAuthorize(SecurityConstant.USER)
-    public ResponseEntity<List<CommentResponse>> findAll(@PathVariable("id") Long id){
+    public ResponseEntity<List<CommentResponse>> findAll(@Valid @PathVariable("id") Long id){
         return new ResponseEntity<>(commentService.getAllComments(id), HttpStatus.OK);
     }
 
