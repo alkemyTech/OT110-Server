@@ -22,7 +22,6 @@ import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.exception.EmailExistException;
 import com.alkemy.ong.model.User;
 import com.alkemy.ong.model.Role;
-import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
 
@@ -80,11 +79,13 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public void makeAdmin(String email) {
+	public String makeAdmin(String email) {
 		String userNotFound = messageSource.getMessage("user.notFound",null,Locale.US);
+		String userUpdated = messageSource.getMessage("user.updatedRole",null,Locale.US);
 		if (userRepository.findByEmail(email).isPresent()) {
 			Role role = roleService.findByName(RoleEnum.ADMIN.getName());
-			userRepository.updateUserRole(email, role);			
+			userRepository.updateUserRole(email, role);
+			return userUpdated;
 		} else {
 			throw new NotFoundException(userNotFound);
 		}
