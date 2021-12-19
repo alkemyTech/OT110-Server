@@ -13,7 +13,7 @@ import com.alkemy.ong.exception.EmailExistException;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
-    void makeAdmin(String username);
+    void makeAdmin(String email);
 
     Optional<User> findByEmail(String email);
 
