@@ -8,6 +8,7 @@ import com.alkemy.ong.security.service.IAuthenticationService;
 import com.alkemy.ong.service.IEmailService;
 import com.alkemy.ong.service.IUserService;
 import com.alkemy.ong.service.RoleService;
+
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
@@ -20,6 +21,7 @@ import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.dto.UserRequest;
 import com.alkemy.ong.exception.EmailExistException;
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.model.Role;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.security.RoleEnum;
@@ -75,9 +77,14 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
-	public void makeAdmin(String username) {
-		// TODO Auto-generated method stub
-		
+	public void makeAdmin(String email) {
+		String userNotFound = messageSource.getMessage("user.notFound",null,Locale.US);
+		if (userRepository.findByEmail(email).isPresent()) {
+			Role role = roleService.findByName(RoleEnum.ADMIN.getName());
+			userRepository.updateUserRole(email, role);			
+		} else {
+			throw new NotFoundException(userNotFound);
+		}
 	}
 
     @Override
