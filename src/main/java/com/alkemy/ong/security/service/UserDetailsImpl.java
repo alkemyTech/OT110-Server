@@ -1,6 +1,9 @@
 package com.alkemy.ong.security.service;
 
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.security.RoleEnum;
+import com.alkemy.ong.security.util.SecurityUtils;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,5 +62,14 @@ public class UserDetailsImpl implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+	public static UserDetailsImpl createSuperUser() {
+        Set<GrantedAuthority> authorities = Set.of(SecurityUtils.convertToAuthority(RoleEnum.SYSTEM_MANAGER.name()));
+        return UserDetailsImpl.builder()
+                .id(-1L)
+                .username("system-admin")
+                .authorities(authorities)
+                .build();
+	}
 
 }
