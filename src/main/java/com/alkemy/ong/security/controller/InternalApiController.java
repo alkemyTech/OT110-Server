@@ -20,8 +20,8 @@ public class InternalApiController {
 	
     @PutMapping("/admin/{email}")
     public ResponseEntity<?> makeAdmin(@PathVariable String email){
-        userService.makeAdmin(email);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String message = userService.makeAdmin(email);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }	
 	
 }
