@@ -1,9 +1,11 @@
-package com.alkemy.ong.security.jwt;
+package com.alkemy.ong.security.filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.alkemy.ong.security.jwt.IJwtProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
