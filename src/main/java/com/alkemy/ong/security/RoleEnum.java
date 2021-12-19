@@ -1,7 +1,7 @@
 package com.alkemy.ong.security;
 
 public enum RoleEnum {
-	ADMIN("ADMIN"), USER("USER");
+	ADMIN("ADMIN"), USER("USER"), SYSTEM_MANAGER("SYSTEM_MANAGER");
 
 	private final String name;
 	private static final String ROLE_ = "ROLE_";
