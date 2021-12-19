@@ -1,8 +1,10 @@
 package com.alkemy.ong.security.config;
 
-import com.alkemy.ong.security.jwt.JwtAuthorizationFilter;
+import com.alkemy.ong.security.RoleEnum;
+import com.alkemy.ong.security.filter.InternalApiAuthenticationFilter;
+import com.alkemy.ong.security.filter.JwtAuthorizationFilter;
 import com.alkemy.ong.security.service.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/auth/login").permitAll()
         		.antMatchers("/auth/register").permitAll()
                 .antMatchers("/auth/me").permitAll()
+                .antMatchers("/api/v1/internal/**").hasRole(RoleEnum.SYSTEM_MANAGER.name())
         		.anyRequest()
                 .authenticated();
         
@@ -68,6 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public JwtAuthorizationFilter jwtAuthorizationFilter(){
         return new JwtAuthorizationFilter();
     }
+    
+    @Bean
+    public InternalApiAuthenticationFilter internalApiAuthenticationFilter(){
+        return new InternalApiAuthenticationFilter(internalApiKey);
+    }    
     
     @Bean
     public WebMvcConfigurer corsConfigurer(){
