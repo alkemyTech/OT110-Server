@@ -33,6 +33,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements IUserService {
@@ -77,6 +79,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
+	@Transactional
 	public void makeAdmin(String email) {
 		String userNotFound = messageSource.getMessage("user.notFound",null,Locale.US);
 		if (userRepository.findByEmail(email).isPresent()) {
