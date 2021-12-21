@@ -69,10 +69,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    @Override
-    public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
+
 
 	@Override
 	public void makeAdmin(String username) {
@@ -153,6 +150,11 @@ public class UserServiceImpl implements IUserService {
     public User findById(Long id){
         String notFoundUserMessage = messageSource.getMessage("user.notFound", null, Locale.US);
         return userRepository.findById(id).orElseThrow(()->new NotFoundException(notFoundUserMessage));
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
 

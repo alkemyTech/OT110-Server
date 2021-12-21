@@ -18,8 +18,6 @@ public class UpdateFields {
 	
     public final MessageSource messageSource;
     private boolean hasUpdate = Boolean.FALSE;
-   
-    
 
     public <T> void updateIfNotBlankAndNotEqual(T source , T destination, Consumer<T> update, String parameterName){
         String notBeBlankMessage = messageSource.getMessage("api.blank", null, Locale.US);
