@@ -47,6 +47,7 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public List<CommentResponse> getAllComments(Long id) {
         String newsNotFound = messageSource.getMessage("news.notFound",null, Locale.US);
+        String commentsListIsEmpty = messageSource.getMessage("comment.listEmpty",null, Locale.US);
 
         Optional<News> existNews = newsRepository.findById(id);
         List<CommentResponse> comments = new ArrayList<>();
@@ -62,6 +63,9 @@ public class CommentServiceImpl implements ICommentService {
                         commentResponse.setNewsId(comment.getNews().getId());
                         comments.add(commentResponse);
                     });
+            if(comments.isEmpty()){
+                throw new EmptyDataException(commentsListIsEmpty);
+            }
         } else{
             throw new NotFoundException(newsNotFound);
         }
