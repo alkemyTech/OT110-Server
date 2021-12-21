@@ -2,8 +2,8 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CommentRequest;
 import com.alkemy.ong.dto.CommentResponse;
-
 import com.alkemy.ong.exception.NotFoundException;
+
 import com.alkemy.ong.dto.CommentResponseList;
 import com.alkemy.ong.exception.EmptyDataException;
 import com.alkemy.ong.mapper.CommentsMapper;
@@ -15,6 +15,8 @@ import com.alkemy.ong.repository.CommentRepository;
 
 import com.alkemy.ong.repository.NewsRepository;
 
+import com.alkemy.ong.repository.UserRepository;
+
 import com.alkemy.ong.security.RoleEnum;
 import com.alkemy.ong.security.jwt.JwtProviderImpl;
 
@@ -24,13 +26,14 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.*;
 
-
-import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-
 import java.time.LocalDateTime;
 
 
@@ -46,6 +49,7 @@ public class CommentServiceImpl implements ICommentService {
     private final MessageSource messageSource;
     private final UpdateFields updateFields;
     private final JwtProviderImpl jwUtil;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -57,22 +61,22 @@ public class CommentServiceImpl implements ICommentService {
         return result;
 
     }
-    
-    public Comment commentDTOEntity(CommentRequest commentDto){
-        Comment comment= new Comment();
+
+    public Comment commentDTOEntity(CommentRequest commentDto) {
+        Comment comment = new Comment();
         User user = userService.findById(commentDto.getUserId());
         News news = newsService.findByIdReturnNews(commentDto.getNewsId());
-        
+
         comment.setNews(news);
         comment.setUser(user);
         comment.setBody(commentDto.getBody());
         comment.setDateUpdate(LocalDateTime.now());
         return comment;
     }
-    
-    public CommentRequest commentEntity2DTO(Comment comment){
-        CommentRequest commentDto= new CommentRequest();
-        
+
+    public CommentRequest commentEntity2DTO(Comment comment) {
+        CommentRequest commentDto = new CommentRequest();
+
         commentDto.setBody(comment.getBody());
         commentDto.setUserId(comment.getUser().getUserId());
         commentDto.setNewsId(comment.getNews().getId());
@@ -103,7 +107,7 @@ public class CommentServiceImpl implements ICommentService {
 
     public List<CommentResponseList> getAll() {
         String commentListIsEmpty = messageSource.getMessage("comments.listEmpty", null, Locale.US);
-        if(commentRepository.findAll().isEmpty()){
+        if (commentRepository.findAll().isEmpty()) {
             throw new EmptyDataException(commentListIsEmpty);
         }
         List<Comment> entities = commentRepository.findAll();
@@ -114,13 +118,13 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public List<CommentResponse> getAllComments(Long id) {
-        String newsNotFound = messageSource.getMessage("news.notFound",null, Locale.US);
-        String commentsListIsEmpty = messageSource.getMessage("comment.listEmpty",null, Locale.US);
+        String newsNotFound = messageSource.getMessage("news.notFound", null, Locale.US);
+        String commentsListIsEmpty = messageSource.getMessage("comments.listEmpty", null, Locale.US);
 
         Optional<News> existNews = newsRepository.findById(id);
         List<CommentResponse> comments = new ArrayList<>();
 
-        if(existNews.isPresent()){
+        if (existNews.isPresent()) {
             commentRepository.findAll()
                     .stream()
                     .filter(comment -> comment.getNews().getId() == id)
@@ -132,12 +136,34 @@ public class CommentServiceImpl implements ICommentService {
                         commentResponse.setNewsId(comment.getNews().getId());
                         comments.add(commentResponse);
                     });
-            if(comments.isEmpty()){
+            if (comments.isEmpty()) {
                 throw new EmptyDataException(commentsListIsEmpty);
             }
-        } else{
+        } else {
             throw new NotFoundException(newsNotFound);
         }
         return comments;
+    }
+
+    @Override
+    public ResponseEntity<?> delete(Long id) {
+        UserDetails activeUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = activeUser.getUsername();
+        User user = userRepository.findByEmail(username).get();
+
+        String notFoundCommentMessage = messageSource.getMessage("comment.notFound", null, Locale.US);
+        String isDeletedCommentMessage = messageSource.getMessage("comment.isDeleted", null, Locale.US);
+        String notAllowedCommentMessage = messageSource.getMessage("comment.notAllowed", null, Locale.US);
+
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(notFoundCommentMessage));
+
+        if (comment.getUser().getUserId() == user.getUserId()) {
+            commentRepository.delete(comment);
+            return new ResponseEntity<>(isDeletedCommentMessage, HttpStatus.OK);
+        } else {
+            throw new BadCredentialsException(notAllowedCommentMessage);
+        }
+
     }
 }
