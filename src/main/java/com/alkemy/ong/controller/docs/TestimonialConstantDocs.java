@@ -33,5 +33,10 @@ public interface TestimonialConstantDocs {
 	public static final String TESTIMONIAL_GET_PARAM_ID = "Enter an existing id to search testimonial";
 	
 	public static final String TESTIMONIAL_GET_PARAM_PAGE_NUMBER = "Enter an existing number page to search testimonial";
+	
+	public static final String TESTIMONIAL_DTO_MODEL = "Model to create a testimonial";
+	public static final String TESTIMONIAL_DTO_MODEL_FIELD_NAME = "Choose a name or title for the testimonial";
+	public static final String TESTIMONIAL_DTO_MODEL_FIELD_IMAGE = "Enter the url of an image";
+	public static final String TESTIMONIAL_DTO_MODEL_FIELD_CONTENT = "Enter the content of the testimonial";
 
 }
