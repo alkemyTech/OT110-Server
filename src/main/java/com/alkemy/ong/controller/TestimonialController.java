@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
+
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
@@ -45,7 +47,7 @@ public class TestimonialController {
     		@ApiResponse(code = 404, message = TestimonialConstantDocs.TESTIMONIAL_404_NOT_FOUND)
     })    
     public ResponseEntity<?> deleteTestimonial(
-    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_DELETE_PARAM_ID, required = true) @Valid @PathVariable("id") Long id
+    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_DELETE_PARAM_ID, required = true, example = "1") @Valid @PathVariable("id") Long id
     		) {
         return testimonialService.delete(id);
     }
@@ -72,7 +74,7 @@ public class TestimonialController {
     		@ApiResponse(code = 404, message = TestimonialConstantDocs.TESTIMONIAL_404_NOT_FOUND)
     })
     public ResponseEntity<TestimonialResponse> update(
-    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_PUT_PARAM_ID, required = true) @PathVariable(value = "id") Long id, 
+    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_PUT_PARAM_ID, required = true, example = "1") @PathVariable(value = "id") Long id, 
     		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_PUT_PARAM_TESTIMONIALREQUEST, required = true) @Valid @RequestBody TestimonialRequest testimonial
     		){
         return new ResponseEntity<TestimonialResponse>(testimonialService.updateTestimonial(testimonial, id), HttpStatus.OK);
@@ -87,7 +89,7 @@ public class TestimonialController {
     		@ApiResponse(code = 404, message = TestimonialConstantDocs.TESTIMONIAL_404_NOT_FOUND)
     })
     public ResponseEntity<?> findById(
-    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_GET_PARAM_ID, required = true) @Valid @PathVariable("id") Long id
+    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_GET_PARAM_ID, required = true, example = "1") @Valid @PathVariable("id") Long id
     		){
         return new ResponseEntity<>(testimonialService.findById(id), HttpStatus.OK);
     }
@@ -101,7 +103,7 @@ public class TestimonialController {
     })    
     public ResponseEntity<PagedModel<TestimonialResponse>> findAllByName(
     		@ApiParam(required = false) Pageable pageable, 
-    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_GET_PARAM_PAGE_NUMBER, required = true) @RequestParam("page") int page
+    		@ApiParam(value = TestimonialConstantDocs.TESTIMONIAL_GET_PARAM_PAGE_NUMBER, required = true, example = "0") @RequestParam("page") int page
     		){
         Page<Testimonial> testimonialEntities = testimonialService.readAllTestimonials(pageable, page);
         PagedModel<TestimonialResponse> testimonialDto = pagedResourcesAssembler
