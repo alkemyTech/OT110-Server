@@ -2,11 +2,14 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.assembler.CategoryAssembler;
+import com.alkemy.ong.controller.docs.CategoryConstantDocs;
 import com.alkemy.ong.dto.CategoryByNameDto;
+import com.alkemy.ong.dto.CategoryDto;
 import com.alkemy.ong.dto.CategoryRequestUpdate;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.ICategoryService;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -24,6 +27,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/category")
 @AllArgsConstructor
+@Api(value = CategoryConstantDocs.CATEGORY)
 public class CategoryController {
 
     private final ICategoryService categoryService;
@@ -32,13 +36,30 @@ public class CategoryController {
     
     @GetMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<?> findById(@Valid @PathVariable("id") Long id ){
+    @ApiOperation(value = CategoryConstantDocs.CATEGORY_FIND_BY_ID, response = CategoryDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_GET_200_OK),
+            @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_404_NOT_FOUND)
+    })
+    public ResponseEntity<?> findById(
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_GET_PARAM_ID, required = true, example = "1")
+            @Valid @PathVariable("id") Long id
+    ){
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(params = "page")
     @PreAuthorize(SecurityConstant.USER_ADMIN)
-    public ResponseEntity<PagedModel<CategoryByNameDto>> findAllCategoriesByName(Pageable pageable, @RequestParam("page") int page){
+    @ApiOperation(value = CategoryConstantDocs.CATEGORY_FIND_ALL_CATEGORIES_BY_NAME, response = PagedModel.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_GET_200_OK),
+            @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_GET_404_NOT_FOUND)
+    })
+    public ResponseEntity<PagedModel<CategoryByNameDto>> findAllCategoriesByName(
+            @ApiParam(required = false) Pageable pageable,
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_GET_PARAM_PAGE_NUMBER, required = true, example = "0")
+            @RequestParam("page") int page
+    ){
         Page<Category> categoryEntities = categoryService.readAllCategoriesByName(pageable, page);
         
         PagedModel<CategoryByNameDto> categoryDtoModel = pagedResourcesAssembler
@@ -49,27 +70,48 @@ public class CategoryController {
     
     @PostMapping()
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequestUpdate category) {
-        try {
-                return new ResponseEntity<>(categoryService.createCategory(category),HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.toString(), HttpStatus.CONFLICT);
-		}
+    @ApiOperation(value = CategoryConstantDocs.CATEGORY_CREATE, response = CategoryDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = CategoryConstantDocs.CATEGORY_POST_201_CREATED)
+    })
+    public ResponseEntity<?> createCategory(
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_POST_PARAM_CATEGORY_REQUEST, required = true)
+            @Valid @RequestBody CategoryRequestUpdate category
+    ) {
+                return new ResponseEntity<>(categoryService.createCategory(category),HttpStatus.CREATED);
     }
 
 
     @PutMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryRequestUpdate category, @PathVariable("id") Long id){
+    @ApiOperation(value = CategoryConstantDocs.CATEGORY_UPDATE, response = CategoryDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_PUT_200_OK),
+            @ApiResponse(code = 403, message = CategoryConstantDocs.CATEGORY_PUT_403_FORBIDDEN),
+            @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_404_NOT_FOUND)
+    })
+    public ResponseEntity<?> updateCategory(
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_PUT_PARAM_ID, required = true, example = "1")
+            @PathVariable("id") Long id,
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_PUT_PARAM_CATEGORY_REQUEST, required = true)
+            @Valid @RequestBody CategoryRequestUpdate category
+    ) {
     	return new ResponseEntity<>(categoryService.updateCategory(category, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize(SecurityConstant.ADMIN)
-    public ResponseEntity<?> delete(@Valid @PathVariable("id") Long id ) {
-       
+    @ApiOperation(value = CategoryConstantDocs.CATEGORY_DELETE, response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_DELETE_200_OK),
+            @ApiResponse(code = 403, message = CategoryConstantDocs.CATEGORY_DELETE_403_FORBIDDEN),
+            @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_404_NOT_FOUND)
+    })
+    public ResponseEntity<?> delete(
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_DELETE_PARAM_ID, required = true, example = "1")
+            @Valid @PathVariable("id") Long id
+    ) {
     	return categoryService.delete(id);
-		
     }
 
 }
