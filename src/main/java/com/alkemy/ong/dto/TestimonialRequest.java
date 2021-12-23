@@ -1,6 +1,6 @@
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.controller.docs.TestimonialConstantDocs;
+import com.alkemy.ong.util.docs.TestimonialConstantDocs;
 import com.alkemy.ong.util.ImageExtension;
 
 import io.swagger.annotations.ApiModel;

@@ -3,8 +3,7 @@ package com.alkemy.ong.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.alkemy.ong.controller.docs.CategoryConstantDocs;
-import io.swagger.annotations.ApiModel;
+import com.alkemy.ong.util.docs.CategoryConstantDocs;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.lang.Nullable;
 

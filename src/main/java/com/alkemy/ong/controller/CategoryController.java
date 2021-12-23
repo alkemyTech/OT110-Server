@@ -2,7 +2,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.assembler.CategoryAssembler;
-import com.alkemy.ong.controller.docs.CategoryConstantDocs;
+import com.alkemy.ong.util.docs.CategoryConstantDocs;
 import com.alkemy.ong.dto.CategoryByNameDto;
 import com.alkemy.ong.dto.CategoryDto;
 import com.alkemy.ong.dto.CategoryRequestUpdate;

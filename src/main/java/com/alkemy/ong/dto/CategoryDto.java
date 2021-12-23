@@ -1,7 +1,7 @@
 
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.controller.docs.CategoryConstantDocs;
+import com.alkemy.ong.util.docs.CategoryConstantDocs;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

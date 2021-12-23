@@ -2,7 +2,7 @@ package com.alkemy.ong.controller;
 
 
 import com.alkemy.ong.assembler.TestimonialAssembler;
-import com.alkemy.ong.controller.docs.TestimonialConstantDocs;
+import com.alkemy.ong.util.docs.TestimonialConstantDocs;
 import com.alkemy.ong.dto.TestimonialRequest;
 import com.alkemy.ong.dto.TestimonialResponse;
 import com.alkemy.ong.model.Testimonial;
@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;

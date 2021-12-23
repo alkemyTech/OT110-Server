@@ -1,4 +1,4 @@
-package com.alkemy.ong.controller.docs;
+package com.alkemy.ong.util.docs;
 
 public interface TestimonialConstantDocs {
 
