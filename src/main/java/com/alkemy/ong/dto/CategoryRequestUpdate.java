@@ -14,17 +14,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = CategoryConstantDocs.CATEGORY_DTO_MODEL)
 public class CategoryRequestUpdate {
 
 	@NotNull(message = "Name Category is necessary.")
-	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_DTO_MODEL_FIELD_NAME)
+	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_CATEGORYREQUESTUPDATE_NAME)
 	private String name;
 	@Nullable
-	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_DTO_MODEL_FIELD_DESCRIPTION)
+	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_CATEGORYREQUESTUPDATE_DESCRIPTION)
 	private String description;
 	@Nullable
-	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_DTO_MODEL_FIELD_IMAGE)
+	@ApiModelProperty(value = CategoryConstantDocs.CATEGORY_CATEGORYREQUESTUPDATE_IMAGE)
 	private String image;
 
 }

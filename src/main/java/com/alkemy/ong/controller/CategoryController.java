@@ -72,10 +72,10 @@ public class CategoryController {
     @PreAuthorize(SecurityConstant.ADMIN)
     @ApiOperation(value = CategoryConstantDocs.CATEGORY_CREATE, response = CategoryDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = CategoryConstantDocs.CATEGORY_POST_201_CREATED)
+            @ApiResponse(code = 201, message = CategoryConstantDocs.CATEGORY_CREATED)
     })
     public ResponseEntity<?> createCategory(
-            @ApiParam(value = CategoryConstantDocs.CATEGORY_POST_PARAM_CATEGORY_REQUEST, required = true)
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_CREATED_PARAM_CATEGORY_REQUEST, required = true)
             @Valid @RequestBody CategoryRequestUpdate category
     ) {
                 return new ResponseEntity<>(categoryService.createCategory(category),HttpStatus.CREATED);
@@ -86,14 +86,13 @@ public class CategoryController {
     @PreAuthorize(SecurityConstant.ADMIN)
     @ApiOperation(value = CategoryConstantDocs.CATEGORY_UPDATE, response = CategoryDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_PUT_200_OK),
-            @ApiResponse(code = 403, message = CategoryConstantDocs.CATEGORY_PUT_403_FORBIDDEN),
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_UPDATE_OK),
             @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_404_NOT_FOUND)
     })
     public ResponseEntity<?> updateCategory(
-            @ApiParam(value = CategoryConstantDocs.CATEGORY_PUT_PARAM_ID, required = true, example = "1")
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_UPDATE_PARAM_ID, required = true, example = "1")
             @PathVariable("id") Long id,
-            @ApiParam(value = CategoryConstantDocs.CATEGORY_PUT_PARAM_CATEGORY_REQUEST, required = true)
+            @ApiParam(value = CategoryConstantDocs.CATEGORY_UPDATE_PARAM_CATEGORY_REQUEST, required = true)
             @Valid @RequestBody CategoryRequestUpdate category
     ) {
     	return new ResponseEntity<>(categoryService.updateCategory(category, id), HttpStatus.OK);
@@ -103,8 +102,7 @@ public class CategoryController {
     @PreAuthorize(SecurityConstant.ADMIN)
     @ApiOperation(value = CategoryConstantDocs.CATEGORY_DELETE, response = String.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_DELETE_200_OK),
-            @ApiResponse(code = 403, message = CategoryConstantDocs.CATEGORY_DELETE_403_FORBIDDEN),
+            @ApiResponse(code = 200, message = CategoryConstantDocs.CATEGORY_DELETE_OK),
             @ApiResponse(code = 404, message = CategoryConstantDocs.CATEGORY_404_NOT_FOUND)
     })
     public ResponseEntity<?> delete(
