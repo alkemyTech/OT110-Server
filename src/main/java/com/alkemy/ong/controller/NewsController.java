@@ -90,7 +90,7 @@ public class NewsController {
     }
 
     @GetMapping(params = "page")
-    @PreAuthorize(SecurityConstant.USER)
+    @PreAuthorize(SecurityConstant.USER_ADMIN)
     @ApiOperation(value = NewsConstantsDocs.NEWS_FIND_ALL_NEWS_BY_NAME, response = PagedModel.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = NewsConstantsDocs.NEWS_GET_200_OK),

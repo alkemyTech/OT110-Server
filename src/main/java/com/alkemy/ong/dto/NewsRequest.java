@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -13,11 +14,11 @@ import javax.validation.constraints.NotNull;
 public class NewsRequest {
 
     @ApiModelProperty(value = NewsConstantsDocs.NEWS_DTOREQUEST_NAME)
-    @NotNull(message = "name cannot be null")
+    @NotBlank(message = "name cannot be null")
     private String name;
 
     @ApiModelProperty(value = NewsConstantsDocs.NEWS_DTOREQUEST_CONTENT)
-    @NotNull(message = "content cannot be null")
+    @NotBlank(message = "content cannot be null")
     private String content;
 
     @ApiModelProperty(value = NewsConstantsDocs.NEWS_DTOREQUEST_IMAGE)
