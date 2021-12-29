@@ -2,6 +2,7 @@ package com.alkemy.ong.integration.news;
 
 import com.alkemy.ong.common.BaseNewsTest;
 import com.alkemy.ong.dto.NewsRequest;
+import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.model.News;
 import com.alkemy.ong.security.RoleEnum;
 import org.junit.Before;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -46,22 +47,22 @@ public class NewsCreateTest extends BaseNewsTest {
 
     @Test
     public void ReturnBadRequestIfAnyAttributeIsNull() {
-        newsRequest.setName(null);
-        newsRequest.setContent(null);
+        newsRequest.setName("");
+        newsRequest.setContent("");
 
-        ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH),
-                HttpMethod.POST, new HttpEntity<>(newsRequest, headers), Object.class);
+        ResponseEntity<NewsResponse> response = testRestTemplate.exchange(createURLWithPort(PATH),
+                HttpMethod.POST, new HttpEntity<>(newsRequest, headers), NewsResponse.class);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
-    public void createNewsSuccesfull(){
+    public void createNewsSuccessfully(){
 
         when(newsRepository.save(isA(News.class))).thenReturn(generateNews());
 
-        ResponseEntity<Object> response = testRestTemplate.exchange(
-                createURLWithPort(PATH), HttpMethod.POST, new HttpEntity<>(newsRequest, headers), Object.class);
+        ResponseEntity<NewsResponse> response = testRestTemplate.exchange(
+                createURLWithPort(PATH), HttpMethod.POST, new HttpEntity<>(newsRequest, headers), NewsResponse.class);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }

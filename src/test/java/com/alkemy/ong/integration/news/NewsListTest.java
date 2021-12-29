@@ -1,6 +1,7 @@
 package com.alkemy.ong.integration.news;
 
 import com.alkemy.ong.common.BaseNewsTest;
+import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.model.News;
 import com.alkemy.ong.security.RoleEnum;
 import org.junit.Test;
@@ -54,8 +55,8 @@ public class NewsListTest extends BaseNewsTest {
 
         login(RoleEnum.USER.getRoleName());
 
-        ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH + page),
-                HttpMethod.GET, new HttpEntity<>(headers), Object.class);
+        ResponseEntity<NewsResponse> response = testRestTemplate.exchange(createURLWithPort(PATH + page),
+                HttpMethod.GET, new HttpEntity<>(headers), NewsResponse.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 

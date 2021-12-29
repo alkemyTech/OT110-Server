@@ -3,7 +3,6 @@ package com.alkemy.ong.common;
 import com.alkemy.ong.dto.NewsRequest;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.News;
-import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
