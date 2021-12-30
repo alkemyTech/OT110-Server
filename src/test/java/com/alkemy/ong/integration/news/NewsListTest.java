@@ -1,7 +1,6 @@
 package com.alkemy.ong.integration.news;
 
 import com.alkemy.ong.common.BaseNewsTest;
-import com.alkemy.ong.dto.NewsResponse;
 import com.alkemy.ong.model.News;
 import com.alkemy.ong.security.RoleEnum;
 import org.junit.Test;
@@ -45,8 +44,8 @@ public class NewsListTest extends BaseNewsTest {
 
 
     @Test
-    public void ReturnNotFoundIfPageOutOfRange() {
-        int page = 12;
+    public void ReturnOkIfListNewsIsEmpty() {
+        int page = 10;
         Pageable pageable = PageRequest.of(page, SIZE_DEFAULT);
         news = createListNews(SIZE_DEFAULT);
         Page<News> pagedNews = new PageImpl<>(news);
@@ -55,8 +54,29 @@ public class NewsListTest extends BaseNewsTest {
 
         login(RoleEnum.USER.getRoleName());
 
-        ResponseEntity<NewsResponse> response = testRestTemplate.exchange(createURLWithPort(PATH + page),
-                HttpMethod.GET, new HttpEntity<>(headers), NewsResponse.class);
+        ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH + page),
+                HttpMethod.GET, new HttpEntity<>(headers), Object.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    }
+
+
+    @Test
+    public void ReturnNotFoundIfPageOutOfRange() {
+        int page = 15;
+        Pageable pageable = PageRequest.of(page, SIZE_DEFAULT);
+        news = createListNews(SIZE_DEFAULT);
+        Page<News> pagedNews = new PageImpl<>(news);
+
+        when(newsRepository.findAll()).thenReturn(news);
+
+        when(newsRepository.findAll(eq(pageable))).thenReturn(pagedNews);
+
+        login(RoleEnum.USER.getRoleName());
+
+        ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH + page),
+                HttpMethod.GET, new HttpEntity<>(headers), Object.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 

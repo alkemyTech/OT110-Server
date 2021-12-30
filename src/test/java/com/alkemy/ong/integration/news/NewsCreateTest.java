@@ -15,8 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.mockito.ArgumentMatchers.isA;
+
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -60,11 +61,13 @@ public class NewsCreateTest extends BaseNewsTest {
     public void createNewsSuccessfully(){
 
         when(newsRepository.save(isA(News.class))).thenReturn(generateNews());
+        when(categoryRepository.existsById(any(Long.class))).thenReturn(true);
+        when(categoryRepository.getById(any(Long.class))).thenReturn(generateCategory());
 
-        ResponseEntity<NewsResponse> response = testRestTemplate.exchange(
-                createURLWithPort(PATH), HttpMethod.POST, new HttpEntity<>(newsRequest, headers), NewsResponse.class);
+        ResponseEntity<Object> response = testRestTemplate.exchange(
+                createURLWithPort(PATH), HttpMethod.POST, new HttpEntity<>(newsRequest, headers), Object.class);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
 }

@@ -3,6 +3,7 @@ package com.alkemy.ong.common;
 import com.alkemy.ong.dto.NewsRequest;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.News;
+import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -13,6 +14,9 @@ public class BaseNewsTest extends BaseGeneralTest {
 
     @MockBean
     protected NewsRepository newsRepository;
+
+    @MockBean
+    protected CategoryRepository categoryRepository;
 
     protected Category generateCategory(){
         Category category = new Category();

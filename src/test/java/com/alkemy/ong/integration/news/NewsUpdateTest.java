@@ -83,6 +83,8 @@ public class NewsUpdateTest extends BaseNewsTest {
 
         when(newsRepository.save(isA(News.class))).thenReturn(newsModified);
 
+        when(categoryRepository.findById(ID)).thenReturn(Optional.of(generateNews().getCategory()));
+
         newsRequest.setName("News Modified");
         newsRequest.setContent("Content Modified");
 
