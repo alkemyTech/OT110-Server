@@ -56,14 +56,12 @@ public class CategoryServiceImpl implements ICategoryService{
 
 	@Override
 	public CategoryDto updateCategory(@Valid CategoryRequestUpdate category, Long id) {
-		Optional<Category> existCategory = categoryRepository.findById(id);
-		if (existCategory.isPresent()) {
-			Category categoryEntity = categoryRepository.findById(id).get();
+		String notFoundCategoryMessage = messageSource.getMessage("category.notFound", null, Locale.US);
+		Category categoryEntity = categoryRepository.findById(id)
+				.orElseThrow(()-> new NotFoundException(notFoundCategoryMessage));
 			categoryMapper.mapDtoToEntity(categoryEntity, category);
 			Category categoryUpdated = categoryRepository.save(categoryEntity);
 			return categoryMapper.mapEntityToDto(categoryUpdated);
-		}
-		return null;
 	}
     
     @Override

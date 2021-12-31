@@ -1,5 +1,6 @@
 package com.alkemy.ong.dto;
 
+import com.alkemy.ong.util.ImageExtension;
 import com.alkemy.ong.util.docs.NewsConstantsDocs;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class NewsRequest {
     @ApiModelProperty(value = NewsConstantsDocs.NEWS_DTOREQUEST_IMAGE)
     @NotNull(message = "image cannot be null")
     @URL(message = "url format not valid")
+    @ImageExtension(message = "image extension not valid, must be JPG, JPEG or PNG")
     private String image;
 
     @ApiModelProperty(value = NewsConstantsDocs.NEWS_DTOREQUEST_CATEGORY)

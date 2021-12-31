@@ -52,7 +52,7 @@ public class UpdateCategoryControllerTest extends BaseCategoryTest{
     }
 
     @Test
-    public void ReturnNullIfIdNotExist() {
+    public void ReturnNotFoundIfIdNotExist() {
         when(categoryRepository.findById(eq(ID2UPDATE))).thenReturn(Optional.empty());
 
         login(RoleEnum.ADMIN.getRoleName());
@@ -62,7 +62,7 @@ public class UpdateCategoryControllerTest extends BaseCategoryTest{
         ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH),
                 HttpMethod.PUT, new HttpEntity<>(categoryRequestUpdate, headers), Object.class);
 
-        assertEquals(response.getBody(), null);
+        assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
 
     }
 
