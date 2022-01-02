@@ -1,6 +1,7 @@
 package com.alkemy.ong.unit.category;
 
 
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.service.impl.CategoryServiceImpl;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -52,10 +54,10 @@ public class UpdateCategoryServiceTest extends BaseCategoryServiceTest{
 
         given(categoryRepository.findById(ID_CATEGORY_NOTFOUND)).willReturn(Optional.empty());
 
-        Object categoryDto = underTest.updateCategory(mockCategoryUpdate, ID_CATEGORY_NOTFOUND);
-
+        assertThatThrownBy(()->underTest.updateCategory(mockCategoryUpdate,ID_CATEGORY_NOTFOUND))
+                .isInstanceOf(NotFoundException.class);
         verify(categoryRepository).findById(ID_CATEGORY_NOTFOUND);
         verify(categoryRepository,never()).save(any(Category.class));
-        assertThat(categoryDto).isEqualTo(null);
+
     }
 }

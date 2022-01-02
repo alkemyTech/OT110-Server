@@ -40,7 +40,6 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize(SecurityConstant.USER_ADMIN)
     public ResponseEntity<CommentResponse> updateCommentsById(@Valid @RequestBody CommentRequest comment, @PathVariable("id") Long id, @RequestHeader(value = "Authorization") String authorizationHeader) {
         return new ResponseEntity<>(commentService.updateCommentsById(id, comment, authorizationHeader), HttpStatus.OK);
     }
