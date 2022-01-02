@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.ContactRequestDto;
 import com.alkemy.ong.dto.ContactResponseDto;
+import com.alkemy.ong.exception.EmptyDataException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.Contact;
 import com.alkemy.ong.repository.ContactRepository;
@@ -35,7 +36,7 @@ public class ContactServiceImpl implements IContactService{
 		contact.setName(contactRequestDto.getName());
 		contact.setEmail(contactRequestDto.getEmail());
 		contact.setMessage(contactRequestDto.getMessage());
-		contact.setPhone(contact.getPhone());
+		contact.setPhone(contactRequestDto.getPhone());
 		Contact contactSaved = contactRepository.save(contact);
 		emailService.sendWelcomeEmail(contactSaved.getEmail(), contactSaved.getName(), "");
 		return contactSaved;
@@ -45,7 +46,7 @@ public class ContactServiceImpl implements IContactService{
 
 	@Override
 	public List<ContactResponseDto> getAll() {
-		String contactListNotFound = messageSource.getMessage("contact.listEmpty", null, Locale.US);
+		String contactListEmpty = messageSource.getMessage("contact.listEmpty", null, Locale.US);
 
 		List<ContactResponseDto> contactResponseDto = new ArrayList<>();
 
@@ -59,7 +60,7 @@ public class ContactServiceImpl implements IContactService{
 		});
 
 		if (contactResponseDto.isEmpty()) {
-			throw new NotFoundException(contactListNotFound);
+			throw new EmptyDataException(contactListEmpty);
 		}
 
 		return contactResponseDto;

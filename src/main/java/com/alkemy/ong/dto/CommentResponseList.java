@@ -9,6 +9,5 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class CommentResponseList {
 
-    @NotBlank(message = "body cannot be blank")
     private String body;
 }

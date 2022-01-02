@@ -33,12 +33,14 @@ public class CommentController {
     }
     
     @PostMapping
-    public ResponseEntity<CommentRequest> createNews(@Valid @RequestBody CommentRequest comment) throws Exception {
+    @PreAuthorize(SecurityConstant.USER)
+    public ResponseEntity<CommentRequest> createComment(@Valid @RequestBody CommentRequest comment) throws Exception {
         CommentRequest comentRequest = commentService.addComment(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(comentRequest);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize(SecurityConstant.USER_ADMIN)
     public ResponseEntity<CommentResponse> updateCommentsById(@Valid @RequestBody CommentRequest comment, @PathVariable("id") Long id, @RequestHeader(value = "Authorization") String authorizationHeader) {
         return new ResponseEntity<>(commentService.updateCommentsById(id, comment, authorizationHeader), HttpStatus.OK);
     }

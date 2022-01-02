@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -15,6 +12,7 @@ public class ContactRequestDto {
     @NotBlank(message="The name field is required")
     @NotEmpty(message = "The name field cannot be empty")
     @NotNull(message = "Name cannot be null")
+    @Pattern(regexp = "^[A-Z]'?[- a-zA-Z]*$",message = "Name field must be a text string")
     private String name;
 
     @Nullable

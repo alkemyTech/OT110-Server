@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
 public class MemberRequest {
 
     @NotBlank(message = "Name field is necessary")
-    @Pattern(regexp = "^[A-Za-z]*$",message = "Name field must be a text string")
+    @Pattern(regexp = "^[A-Z]'?[- a-zA-Z]*$",message = "Name field must be a text string")
     private String name;
     @URL(message = "Must be a valid URL")
     private JsonNullable<String> facebookUrl;
