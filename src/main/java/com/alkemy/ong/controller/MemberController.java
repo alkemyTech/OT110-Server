@@ -6,7 +6,10 @@ import com.alkemy.ong.dto.MemberResponse;
 import com.alkemy.ong.model.Member;
 import com.alkemy.ong.security.SecurityConstant;
 import com.alkemy.ong.service.IMemberService;
+import com.alkemy.ong.util.docs.CategoryConstantDocs;
 import com.alkemy.ong.util.docs.MemberConstantDocs;
+
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -24,6 +27,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/members")
+@Api(value = MemberConstantDocs.MEMBER)
 public class MemberController {
 
 	private final IMemberService memberService;

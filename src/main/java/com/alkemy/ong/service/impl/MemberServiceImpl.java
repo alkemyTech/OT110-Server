@@ -50,7 +50,7 @@ public class MemberServiceImpl implements IMemberService{
 		int lastPage = pageMember.getTotalPages()-1;
 
 		if(pageNo > lastPage){
-			throw new NotFoundException(memberLastPage + lastPage);
+			throw new NotFoundException(memberLastPage + pageMember.getTotalPages());
 		}
 
 		List<MemberResponse> memberResponse = pageMember.map(memberMapper::memberModel2DTO).toList();

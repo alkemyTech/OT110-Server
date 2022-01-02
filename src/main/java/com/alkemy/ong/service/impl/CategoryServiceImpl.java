@@ -96,7 +96,7 @@ public class CategoryServiceImpl implements ICategoryService{
 	public Page<Category> readAllCategoriesByName(Pageable pageable , int page) {
 		String categoryListPageNotFound = messageSource.getMessage("category.pageNotFound", null, Locale.US);
 		pageable = PageRequest.of(page, SIZE_DEFAULT);
-		if (page > categoryRepository.findAll(pageable).getTotalPages()) {
+		if (page >= categoryRepository.findAll(pageable).getTotalPages()) {
 			throw new NotFoundException(categoryListPageNotFound);
 		}
 		return categoryRepository.findAll(pageable);

@@ -4,7 +4,9 @@ package com.alkemy.ong.config.seeder;
 
 import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.User;
+import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
+import com.alkemy.ong.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,8 @@ import java.util.Date;
 public class UserSeeder implements CommandLineRunner{
     
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     
     
@@ -27,11 +31,22 @@ public class UserSeeder implements CommandLineRunner{
     }
     
     private void loadUsers(){
+        if (roleRepository.count() < 2) {
+            createRoles();
+        }
         if (userRepository.count() == 0) {
             createUsers();
         }
     }
-    
+
+    private void createRoles(){
+        if(roleRepository.findByName("ADMIN").isEmpty()){
+            roleRepository.save(createRoleAdmin());
+        }
+        if(roleRepository.findByName("USER").isEmpty()) {
+            roleRepository.save(createRoleUser());
+        }
+    }
     
     private void createUsers(){
             userRepository.save(buildUserAdmin("mateo","lopez","mateolopez@gmail.com","useradmin"));
@@ -83,7 +98,7 @@ public class UserSeeder implements CommandLineRunner{
         user.setEmail(email);
         user.setPhoto(null);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRole(createRoleUser());
+        user.setRole(roleService.findByName(RoleEnum.USER.getName()));
         user.setDateCreation(LocalDateTime.now());
         return user; 
     }
@@ -95,7 +110,7 @@ public class UserSeeder implements CommandLineRunner{
         user.setEmail(email);
         user.setPhoto(null);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRole(createRoleAdmin());
+        user.setRole(roleService.findByName(RoleEnum.ADMIN.getName()));
         user.setDateCreation(LocalDateTime.now());
         return user; 
     }

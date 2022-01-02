@@ -142,9 +142,7 @@ public class UserServiceImpl implements IUserService {
         if (userUpdateDto.getPhoto() != null) {
             user.setPhoto(userUpdateDto.getPhoto());
         }
-        if (userUpdateDto.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(userUpdateDto.getPassword()));
-        }
+
     }
 
     public User findById(Long id){

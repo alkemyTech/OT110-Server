@@ -100,7 +100,7 @@ public class TestimonialServiceImpl implements ITestimonialService {
 	public Page<Testimonial> readAllTestimonials(Pageable pageable, int page) {
 		String testimonialListPageNotFound = messageSource.getMessage("testimonial.pageNotFound", null, Locale.US);
 		pageable = (Pageable) PageRequest.of(page, SIZE_DEFAULT);
-		if (page > testimonialRepository.findAll(pageable).getTotalPages()) {
+		if (page >= testimonialRepository.findAll(pageable).getTotalPages()) {
 			throw new NotFoundException(testimonialListPageNotFound);
 		}
 		return testimonialRepository.findAll((org.springframework.data.domain.Pageable) pageable);

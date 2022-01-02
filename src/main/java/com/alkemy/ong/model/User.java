@@ -56,7 +56,7 @@ public class User {
     private LocalDateTime dateUpdate;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "idRole")
     private Role role;
 

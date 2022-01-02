@@ -130,7 +130,7 @@ public class NewsServiceImpl implements INewsService {
         if(newsRepository.findAll().isEmpty()){
             throw new EmptyDataException(newsEmptyList);
         }
-        if (page > newsRepository.findAll(pageable).getTotalPages()){
+        if (page >= newsRepository.findAll(pageable).getTotalPages()){
             throw new NotFoundException(moreThanTotalPageError);
         }
         
