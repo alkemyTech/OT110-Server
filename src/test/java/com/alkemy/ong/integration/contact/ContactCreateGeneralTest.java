@@ -5,7 +5,9 @@ import static org.mockito.ArgumentMatchers.isA;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,15 +17,15 @@ import com.alkemy.ong.common.BaseContactTest;
 import com.alkemy.ong.dto.ContactRequestDto;
 import com.alkemy.ong.dto.ContactResponseDto;
 import com.alkemy.ong.model.Contact;
-import com.alkemy.ong.repository.ContactRepository;
 import com.alkemy.ong.security.RoleEnum;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContactCreateGeneralTest extends BaseContactTest {
 	
 	 private final String PATH = "/contacts";
-	 private ContactRepository contactRepository;
 	 private ContactRequestDto contactRequest = new ContactRequestDto();
-	 private RoleEnum roleEnum;
 	
 	 @Before
 	 public void setUp(){
@@ -52,8 +54,6 @@ public class ContactCreateGeneralTest extends BaseContactTest {
         contactRequest.setEmail("");
         contactRequest.setMessage("");
         
-        //Mockito.when(contactRepository.save(isA(Contact.class))).thenReturn(generateContact());
-        
         ResponseEntity<ContactResponseDto> response = testRestTemplate.exchange(createURLWithPort(PATH),
                 HttpMethod.POST, new HttpEntity<>(contactRequest, headers), ContactResponseDto.class);
 
@@ -62,14 +62,6 @@ public class ContactCreateGeneralTest extends BaseContactTest {
     
     @Test
     public void CreateContactSuccess() {
-        /*
-        login(roleEnum.getRoleName());
-
-        contactRequest.setName("contactTest2");
-        contactRequest.setEmail("prueb2a@gmail.com");
-        contactRequest.setMessage("mensaje de prueba2");
-
-         */
 
         Mockito.when(contactRepository.save(isA(Contact.class))).thenReturn(generateContact());
 

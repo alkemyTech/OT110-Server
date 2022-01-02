@@ -21,8 +21,8 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContactListGeneralTest extends BaseContactTest {
 	
-    private final String PATH = "/contacts/";
-    private ContactRepository contactRepository;
+    private final String PATH = "/contacts";
+    //private ContactRepository contactRepository;
     
     @Test
     public void ReturnForbiddenIfUserIsNotLogged() {
@@ -48,8 +48,8 @@ public class ContactListGeneralTest extends BaseContactTest {
 
         login(RoleEnum.ADMIN.getRoleName());
 
-        ResponseEntity<?> response = testRestTemplate.exchange(createURLWithPort(PATH), HttpMethod.GET, 
-        		new HttpEntity<>(headers), List.class);
+        ResponseEntity<Object> response = testRestTemplate.exchange(createURLWithPort(PATH), HttpMethod.GET,
+        		new HttpEntity<>(headers), Object.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
     
