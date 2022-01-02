@@ -2,7 +2,6 @@ package com.alkemy.ong.integration.contact;
 
 import com.alkemy.ong.common.BaseContactTest;
 import com.alkemy.ong.model.Contact;
-import com.alkemy.ong.repository.ContactRepository;
 import com.alkemy.ong.security.RoleEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +21,6 @@ import static org.mockito.Mockito.when;
 public class ContactListGeneralTest extends BaseContactTest {
 	
     private final String PATH = "/contacts";
-    //private ContactRepository contactRepository;
     
     @Test
     public void ReturnForbiddenIfUserIsNotLogged() {
